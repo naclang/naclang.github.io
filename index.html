@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>NaC Language</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f1220;
+      color: #eaeaf0;
+      line-height: 1.6;
+    }
+    header {
+      padding: 80px 20px;
+      text-align: center;
+      background: radial-gradient(circle at top, #2b2f77, #0f1220);
+    }
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.85;
+    }
+    section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #181c3a;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    pre {
+      background: #0b0e1a;
+      padding: 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      color: #a5f3fc;
+    }
+    code { font-family: "Fira Code", monospace; }
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      background: #0b0e1a;
+      opacity: 0.8;
+    }
+    a.button {
+      display: inline-block;
+      padding: 12px 20px;
+      margin-top: 20px;
+      background: #6366f1;
+      color: white;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>NaC Language</h1>
+  <p>C ile yazılmış modern, küçük ve güçlü bir script dili</p>
+  <a class="button" href="#basla">Hemen Başla</a>
+</header>
+
+<section id="nedir">
+  <h2>NaC Nedir?</h2>
+  <p>
+    <strong>NaC</strong>, C dili ile yazılmış, fonksiyonlar, döngüler, koşullar,
+    diziler ve string işlemleri destekleyen hafif bir yorumlayıcı dildir.
+    Öğrenmesi kolay, genişletmesi keyiflidir.
+  </p>
+</section>
+
+<section id="ozellikler">
+  <h2>Özellikler</h2>
+  <div class="features">
+    <div class="card">Fonksiyon tanımları (<code>fn</code>, <code>rn</code>)</div>
+    <div class="card">If / Else ve For döngüleri</div>
+    <div class="card">Dinamik diziler ve array literal</div>
+    <div class="card">String + number otomatik işlemler</div>
+    <div class="card">Yerleşik <code>in()</code> ve <code>out()</code></div>
+    <div class="card">Zaman fonksiyonu: <code>time()</code></div>
+  </div>
+</section>
+
+<section id="ornek">
+  <h2>Örnek Kod</h2>
+  <pre><code>// Fibonacci
+fn fib(n) {
+  if (n &lt; 2) {
+    rn n;
+  } : {
+    rn fib(n-1) + fib(n-2);
+  };
+};
+
+out(fib(10));
+</code></pre>
+</section>
+
+<section id="basla">
+  <h2>Başlarken</h2>
+  <pre><code>gcc -o nac nac.c -lm
+./nac program.nac</code></pre>
+  <p>
+    Yukarıdaki komutlarla NaC yorumlayıcısını derleyip kendi <code>.nac</code>
+    dosyalarını çalıştırabilirsin.
+  </p>
+</section>
+
+<footer>
+  <p>NaC Language • Built with ❤️ and C</p>
+</footer>
+
+</body>
+</html>
