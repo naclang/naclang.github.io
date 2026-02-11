@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Install NaC - Getting Started</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="shortcut icon" href="https://aardaakpinar.github.io/assets/images/logos/NaC.png">
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <header>
+        <a href="/" class="logo">NaC</a>
+        <nav>
+            <a href="/#why">Why NaC</a>
+            <a href="/#learn">Learn</a>
+            <a href="docs.html">Docs</a>
+            <a href="https://github.com/naclang/nac" target="_blank" class="github-btn">GitHub</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Getting Started</h1>
+        <p class="subtitle">Install and compile NaC in minutes. Start building amazing things.</p>
+
+        <h2><span class="step-number">1</span> Prerequisites</h2>
+        <p>Before installing NaC, make sure you have the following:</p>
+        <ul>
+            <li>GCC compiler (version 4.9 or higher)</li>
+            <li>Make (optional, for build automation)</li>
+            <li>Git (to clone the repository)</li>
+        </ul>
+
+        <div class="info-box">
+            <strong>💡 Quick Check:</strong> Run <code>gcc --version</code> to verify your GCC installation.
+        </div>
+
+        <h2><span class="step-number">2</span> Download NaC</h2>
+        <p>Clone the repository from GitHub:</p>
+        
+        <div class="code-block" data-lang="bash">
+            <code><span class="command">git clone</span> https://github.com/naclang/nac.git
+<span class="command">cd</span> nac</code>
+        </div>
+
+        <p>Or download the latest release:</p>
+        <div class="code-block" data-lang="bash">
+            <code><span class="command">wget</span> https://github.com/naclang/nac/releases/latest/download/nac.c
+<span class="command">wget</span> https://github.com/naclang/nac/releases/latest/download/examples.zip</code>
+        </div>
+
+        <h2><span class="step-number">3</span> Compile the Interpreter</h2>
+        <p>Compile the NaC interpreter using GCC:</p>
+
+        <div class="code-block" data-lang="bash">
+            <code><span class="command">gcc</span> -o nac nac.c -lm</code>
+        </div>
+
+        <div class="warning-box">
+            <strong>⚠️ Important:</strong> The <code>-lm</code> flag is required to link the math library.
+        </div>
+
+        <h3>Platform-Specific Instructions</h3>
+
+        <h4>Linux / macOS</h4>
+        <div class="code-block" data-lang="bash">
+            <code><span class="command"># Compile</span>
+gcc -o nac nac.c -lm
+
+<span class="command"># Make executable</span>
+chmod +x nac
+
+<span class="command"># Optional: Install system-wide</span>
+sudo cp nac /usr/local/bin/</code>
+        </div>
+
+        <h4>Windows (MinGW / MSYS2)</h4>
+        <div class="code-block" data-lang="bash">
+            <code><span class="command"># Using MinGW</span>
+gcc -o nac.exe nac.c -lm
+
+<span class="command"># Add to PATH (optional)</span>
+set PATH=%PATH%;C:\path\to\nac</code>
+        </div>
+
+        <h2><span class="step-number">4</span> Verify Installation</h2>
+        <p>Create a simple test program to verify everything works:</p>
+
+        <div class="code-block" data-lang="nac">
+            <code><span class="comment">// hello.nac</span>
+out("Hello, NaC World!");
+x = 42;
+out("The answer is: " + x);</code>
+        </div>
+
+        <p>Run your first NaC program:</p>
+        <div class="code-block" data-lang="bash">
+            <code><span class="command">./nac</span> hello.nac</code>
+        </div>
+
+        <div class="success-box">
+            <strong>✅ Success!</strong> If you see the output, NaC is working correctly.
+        </div>
+
+        <h2><span class="step-number">5</span> Try More Examples</h2>
+        <p>Explore the examples directory for more sample programs:</p>
+
+        <div class="code-block" data-lang="bash">
+            <code><span class="command"># Fibonacci sequence</span>
+./nac examples/fibonacci.nac
+
+<span class="command"># Array operations</span>
+./nac examples/arrays.nac
+
+<span class="command"># Sorting algorithm</span>
+./nac examples/bubble_sort.nac</code>
+        </div>
+
+        <h2>Compilation Options</h2>
+        <p>Advanced compilation options for optimization:</p>
+
+        <h3>Debug Build</h3>
+        <div class="code-block" data-lang="bash">
+            <code><span class="command">gcc</span> -g -o nac-debug nac.c -lm</code>
+        </div>
+
+        <h3>Optimized Build</h3>
+        <div class="code-block" data-lang="bash">
+            <code><span class="command">gcc</span> -O3 -o nac nac.c -lm</code>
+        </div>
+
+        <h3>Static Build (Portable)</h3>
+        <div class="code-block" data-lang="bash">
+            <code><span class="command">gcc</span> -static -o nac nac.c -lm</code>
+        </div>
+
+        <h2>Troubleshooting</h2>
+
+        <h3>Common Issues</h3>
+        
+        <div class="info-box">
+            <strong>Error: "undefined reference to 'sqrt'"</strong><br>
+            Solution: Make sure to include the <code>-lm</code> flag when compiling.
+        </div>
+
+        <div class="info-box">
+            <strong>Error: "gcc: command not found"</strong><br>
+            Solution: Install GCC using your package manager:<br>
+            • Ubuntu/Debian: <code>sudo apt install build-essential</code><br>
+            • Fedora: <code>sudo dnf install gcc</code><br>
+            • macOS: <code>xcode-select --install</code>
+        </div>
+
+        <div class="info-box">
+            <strong>Error: "Permission denied"</strong><br>
+            Solution: Run <code>chmod +x nac</code> to make the binary executable.
+        </div>
+
+        <h2>Next Steps</h2>
+        <p>Now that you have NaC installed, here's what to do next:</p>
+        <ul>
+            <li>📚 <a href="docs.html">Read the documentation</a> to learn the language syntax</li>
+            <li>💻 Check out <a href="/#learn">code examples</a> on the main page</li>
+            <li>🚀 Join the <a href="https://github.com/naclang/nac/discussions">community discussions</a></li>
+            <li>🐛 Report bugs or request features on <a href="https://github.com/naclang/nac/issues">GitHub</a></li>
+        </ul>
+
+        <a href="docs.html" class="btn-primary">Read Full Documentation →</a>
+    </div>
+
+    <footer>
+        <p>NaC Language v3.0.0 | <a href="https://github.com/naclang/nac" target="_blank">GitHub</a> | MIT License</p>
+    </footer>
+</body>
+</html>

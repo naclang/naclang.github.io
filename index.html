@@ -1,133 +1,163 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>NaC Language</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0f1220;
-      color: #eaeaf0;
-      line-height: 1.6;
-    }
-    header {
-      padding: 80px 20px;
-      text-align: center;
-      background: radial-gradient(circle at top, #2b2f77, #0f1220);
-    }
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-    }
-    header p {
-      font-size: 1.2rem;
-      opacity: 0.85;
-    }
-    section {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 60px 20px;
-    }
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: #181c3a;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-    pre {
-      background: #0b0e1a;
-      padding: 20px;
-      border-radius: 12px;
-      overflow-x: auto;
-      color: #a5f3fc;
-    }
-    code { font-family: "Fira Code", monospace; }
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      background: #0b0e1a;
-      opacity: 0.8;
-    }
-    a.button {
-      display: inline-block;
-      padding: 12px 20px;
-      margin-top: 20px;
-      background: #6366f1;
-      color: white;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 600;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaC — Next-gen Programming Language</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="shortcut icon" href="https://aardaakpinar.github.io/assets/images/logos/NaC.png">
 </head>
 <body>
+    <div class="grid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
 
-<header>
-  <h1>NaC Language</h1>
-  <p>C ile yazılmış modern, küçük ve güçlü bir script dili</p>
-  <a class="button" href="#basla">Hemen Başla</a>
-</header>
+    <header>
+        <a href="#" class="logo">NaC</a>
+        <nav>
+            <a href="#why">Why NaC</a>
+            <a href="#learn">Learn</a>
+            <a href="docs.html">Docs</a>
+            <a href="https://github.com/naclang/nac" target="_blank" class="github-btn">GitHub</a>
+        </nav>
+    </header>
 
-<section id="nedir">
-  <h2>NaC Nedir?</h2>
-  <p>
-    <strong>NaC</strong>, C dili ile yazılmış, fonksiyonlar, döngüler, koşullar,
-    diziler ve string işlemleri destekleyen hafif bir yorumlayıcı dildir.
-    Öğrenmesi kolay, genişletmesi keyiflidir.
-  </p>
-</section>
+    <main>
+        <section class="hero">
+            <h1>NaC Language</h1>
+            <p>Next-generation programming language for modern developers. Simple syntax, powerful features, blazing fast execution.</p>
+            <div class="hero-buttons">
+                <a href="install.html" class="btn-primary">Get Started</a>
+                <a href="#learn" class="btn-secondary">Learn More</a>
+            </div>
 
-<section id="ozellikler">
-  <h2>Özellikler</h2>
-  <div class="features">
-    <div class="card">Fonksiyon tanımları (<code>fn</code>, <code>rn</code>)</div>
-    <div class="card">If / Else ve For döngüleri</div>
-    <div class="card">Dinamik diziler ve array literal</div>
-    <div class="card">String + number otomatik işlemler</div>
-    <div class="card">Yerleşik <code>in()</code> ve <code>out()</code></div>
-    <div class="card">Zaman fonksiyonu: <code>time()</code></div>
-  </div>
-</section>
-
-<section id="ornek">
-  <h2>Örnek Kod</h2>
-  <pre><code>// Fibonacci
-fn fib(n) {
-  if (n &lt; 2) {
-    rn n;
-  } : {
-    rn fib(n-1) + fib(n-2);
-  };
+            <div class="code-showcase">
+                <pre><code><span class="keyword">fn</span> <span class="function">fibonacci</span>(n) {
+    <span class="keyword">if</span> (n <= 1) { <span class="keyword">rn</span> n; };
+    <span class="keyword">rn</span> <span class="function">fibonacci</span>(n - 1) + <span class="function">fibonacci</span>(n - 2);
 };
 
-out(fib(10));
-</code></pre>
-</section>
+<span class="keyword">for</span> (i = 0; i < 10; i++) {
+    <span class="keyword">out</span>(<span class="function">fibonacci</span>(i));
+};</code></pre>
+            </div>
+        </section>
 
-<section id="basla">
-  <h2>Başlarken</h2>
-  <pre><code>gcc -o nac nac.c -lm
-./nac program.nac</code></pre>
-  <p>
-    Yukarıdaki komutlarla NaC yorumlayıcısını derleyip kendi <code>.nac</code>
-    dosyalarını çalıştırabilirsin.
-  </p>
-</section>
+        <section id="why" class="features">
+            <h2 class="section-title scroll-reveal">Why NaC?</h2>
+            <div class="features-grid">
+                <div class="feature-card scroll-reveal">
+                    <h3>Lightning Fast</h3>
+                    <p>Native C compilation ensures maximum performance. No runtime overhead, just pure speed.</p>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <h3>Simple Syntax</h3>
+                    <p>Clean, intuitive syntax that's easy to learn but powerful enough for complex applications.</p>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <h3>Dynamic Typing</h3>
+                    <p>Flexible type system with automatic conversions. Write less boilerplate, focus on logic.</p>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <h3>Array Support</h3>
+                    <p>First-class array support with powerful manipulation capabilities built right in.</p>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <h3>Expressive</h3>
+                    <p>Write beautiful, readable code with minimal syntax. Functions, loops, conditions - all elegant.</p>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <h3>Zero Dependencies</h3>
+                    <p>Single binary, no external dependencies. Compile with GCC and you're ready to go.</p>
+                </div>
+            </div>
+        </section>
 
-<footer>
-  <p>NaC Language • Built with ❤️ and C</p>
-</footer>
+        <section id="learn" class="features">
+            <h2 class="section-title scroll-reveal">Quick Examples</h2>
+            <div class="features-grid">
+                <div class="feature-card scroll-reveal">
+                    <h3>Variables & I/O</h3>
+                    <pre><code><span class="comment">// Get user input</span>
+<span class="keyword">in</span>(name);
+<span class="keyword">out</span>(<span class="string">"Hello, "</span> + name);
 
+<span class="comment">// Math operations</span>
+x = 42;
+y = x * 2 + 10;
+<span class="keyword">out</span>(y);</code></pre>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <h3>Functions</h3>
+                    <pre><code><span class="keyword">fn</span> <span class="function">factorial</span>(n) {
+    <span class="keyword">if</span> (n <= 1) { 
+        <span class="keyword">rn</span> 1; 
+    };
+    <span class="keyword">rn</span> n * <span class="function">factorial</span>(n - 1);
+};
+
+<span class="keyword">out</span>(<span class="function">factorial</span>(5));</code></pre>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <h3>Arrays</h3>
+                    <pre><code><span class="comment">// Create and fill array</span>
+arr = <span class="keyword">array</span>(5);
+<span class="keyword">for</span> (i = 0; i < 5; i++) {
+    arr[i] = i * i;
+};
+
+<span class="comment">// Print array</span>
+<span class="keyword">out</span>(arr);</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2 class="scroll-reveal">Ready to Build?</h2>
+            <p class="scroll-reveal" style="font-size: 1.2rem; color: var(--text-dim); margin-bottom: 2rem;">
+                Join the NaC community and start creating amazing things today.
+            </p>
+            <div class="hero-buttons scroll-reveal">
+                <a href="install.html" class="btn-primary">Install NaC</a>
+                <a href="docs.html" class="btn-secondary">Read Docs</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
