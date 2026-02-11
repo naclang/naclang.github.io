@@ -183,6 +183,7 @@ nav a:hover {
 ========================= */
 
 .editor-section {
+    max-width: 1200px;
     padding: 6rem 2rem;
 }
 
