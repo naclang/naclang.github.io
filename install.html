@@ -63,7 +63,7 @@
             <div class="code-block" data-lang="bash">
                 <code
                     ><span class="command"># Using MinGW</span><br />
-                    gcc -o nac.exe nac.c -lm -lwinhttp<br />
+                    ./build.bat<br />
                     <br />
                     <span class="command"># Add to PATH (optional)</span><br />
                     set PATH=%PATH%;C:\path\to\nac</code
@@ -74,12 +74,12 @@
             <h4>Linux / macOS</h4>
             <div class="code-block" data-lang="bash">
                 <code
-                    ><span class="command"># Compile</span><br />
-                    gcc -o nac nac.c -lm -lcurl<br />
+                    ><span class="command"># Make executable</span><br />
+                    chmod +x build.sh<br />
                     <br />
-                    <span class="command"># Make executable</span><br />
-                    chmod +x nac<br />
-                    <br />
+                    <span class="command"># Optional: Install system-wide</span><br />
+                    ./build.sh<br>
+                    <br>
                     <span class="command"># Optional: Install system-wide</span><br />
                     sudo cp nac /usr/local/bin/</code
                 ><br />
