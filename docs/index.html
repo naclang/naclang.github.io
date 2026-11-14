@@ -19,11 +19,10 @@
 			<nav class="site-nav" id="site-nav" aria-label="Main navigation">
 				<div class="site-nav-inner">
 					<a href="../index.html#why">Why</a>
-					<a href="../index.html#examples">Examples</a>
 					<a href="../index.html#security">Security</a>
 					<div class="nav-dropdown">
 						<button type="button" class="nav-dropbtn is-active" aria-haspopup="true" aria-expanded="false">Docs</button>
-						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
+						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="testing.html">Testing and dev mode</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
 					</div>
 				</div>
 			</nav>
@@ -31,8 +30,11 @@
 
 		<div class="docs-layout">
 			<aside class="docs-toc" aria-label="Documentation">
+				<button type="button" class="toc-toggle" aria-expanded="false" aria-controls="toc-panel"><span class="toc-toggle-label">Docs</span><span class="toc-toggle-current">Overview</span></button>
 				<p class="sidebar-title">Documentation</p>
-				<ul><li><a href="index.html" class="is-page" aria-current="page">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul>
+				<div class="toc-panel" id="toc-panel">
+					<ul><li><a href="index.html" class="is-page" aria-current="page">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="testing.html">Testing and dev mode</a></li><li><a href="legacy.html">Removed syntax</a></li></ul>
+				</div>
 			</aside>
 
 			<main class="docs-content">
@@ -51,8 +53,10 @@ people = [<span class="string">"Ada"</span>, <span class="string">"Turing"</span
 <span class="keyword">for</span> p <span class="keyword">in</span> people {
     <span class="keyword">if</span> type(p) == <span class="string">"map"</span> { <span class="keyword">print</span>(greet(p.name)) } <span class="keyword">else</span> { <span class="keyword">print</span>(greet(p)) }
 }</code></pre></div></section>
-<section class="doc-section"><div class="doc-cards"><a class="doc-card" href="install.html"><h3>Install</h3><p>Build NaC from source on Linux, macOS or Windows, run an example server and package a script.</p></a><a class="doc-card" href="basics.html"><h3>Language basics</h3><p>Comments, keywords, data types, variables and operators.</p></a><a class="doc-card" href="control-flow.html"><h3>Control flow and errors</h3><p>Conditions, loops and error handling with try, catch and throw.</p></a><a class="doc-card" href="functions.html"><h3>Functions</h3><p>Declaring functions, function values and callbacks.</p></a><a class="doc-card" href="collections.html"><h3>Arrays and maps</h3><p>Working with arrays and maps.</p></a><a class="doc-card" href="io.html"><h3>I/O, files and builtins</h3><p>Input and output, reading and writing files, conversion and builtin functions.</p></a><a class="doc-card" href="server.html"><h3>HTTP server</h3><p>Routes, static files, responses and site hosting.</p></a><a class="doc-card" href="security.html"><h3>Cookies, sessions and security</h3><p>Cookies, sessions, security primitives and server hardening defaults.</p></a><a class="doc-card" href="http-client.html"><h3>HTTP client and JSON</h3><p>Outgoing requests, responses, callbacks and JSON.</p></a><a class="doc-card" href="legacy.html"><h3>Removed syntax</h3><p>Old syntax and functions that no longer exist.</p></a></div></section>
+<section class="doc-section"><div class="doc-cards"><a class="doc-card" href="install.html"><h3>Install</h3><p>Build NaC from source on Linux, macOS or Windows, run an example server and package a script.</p></a><a class="doc-card" href="basics.html"><h3>Language basics</h3><p>Comments, keywords, data types, variables and operators.</p></a><a class="doc-card" href="control-flow.html"><h3>Control flow and errors</h3><p>Conditions, loops and error handling with try, catch and throw.</p></a><a class="doc-card" href="functions.html"><h3>Functions</h3><p>Declaring functions, function values and callbacks.</p></a><a class="doc-card" href="collections.html"><h3>Arrays and maps</h3><p>Working with arrays and maps.</p></a><a class="doc-card" href="io.html"><h3>I/O, files and builtins</h3><p>Input and output, reading and writing files, conversion and builtin functions.</p></a><a class="doc-card" href="server.html"><h3>HTTP server</h3><p>Routes, static files, responses and site hosting.</p></a><a class="doc-card" href="security.html"><h3>Cookies, sessions and security</h3><p>Cookies, sessions, security primitives and server hardening defaults.</p></a><a class="doc-card" href="http-client.html"><h3>HTTP client and JSON</h3><p>Outgoing requests, responses, callbacks and JSON.</p></a><a class="doc-card" href="testing.html"><h3>Testing and dev mode</h3><p>assert, in-process requests, nac test and nac dev.</p></a><a class="doc-card" href="legacy.html"><h3>Removed syntax</h3><p>Old syntax and functions that no longer exist.</p></a></div></section>
 <section id="running" class="doc-section"><h2>Running and building</h2><div class="terminal"><div class="terminal-bar"><span>terminal</span><span>bash</span></div><pre><code>./nac app.nac                    <span class="comment"># run a script</span>
+./nac dev app.nac                <span class="comment"># restart when the script or .env changes</span>
+./nac test tests.nac             <span class="comment"># run a test script</span>
 ./nac build app.nac              <span class="comment"># writes ./app</span>
 ./nac build app.nac -o my_api    <span class="comment"># custom name</span></code></pre></div>
 <p><code>nac build</code> bundles the script and the runtime into one executable. It needs a C compiler and the <code>src/</code> directory next to <code>nac</code>. Build steps are in the <a href="install.html">install guide</a>.</p></section>
@@ -67,10 +71,9 @@ people = [<span class="string">"Ada"</span>, <span class="string">"Turing"</span
 				<p>A scripting language for people who want to serve something without assembling a framework.</p>
 			</div>
 			<nav class="footer-nav" aria-label="Footer navigation">
-				<a href="index.html">Docs</a>
-				<a href="install.html">Install</a>
-				<a href="../index.html#examples">Examples</a>
-				<a href="../index.html#security">Security</a>
+				<a href="https://github.com/naclang/nac/tree/main/examples">Examples</a>
+				<a href="https://github.com/naclang/nac/blob/main/Roadmap.md">Roadmap</a>
+				<a href="https://github.com/naclang/nac">GitHub</a>
 			</nav>
 			<p class="copyright">&copy; <span data-year></span> NaC Language</p>
 		</footer>

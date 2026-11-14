@@ -22,42 +22,6 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     });
 });
 
-// Example browser on the homepage.
-const sidebarItems = Array.from(document.querySelectorAll(".editor-sidebar li[data-url]"));
-const codeContent = document.getElementById("code-content");
-const fileName = document.querySelector(".file-name");
-
-async function loadExample(url) {
-    if (!codeContent) return;
-
-    codeContent.textContent = "Loading...";
-
-    try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(response.status);
-        codeContent.textContent = await response.text();
-    } catch (error) {
-        codeContent.textContent =
-            "Could not load " + url + "\n\n" + "Open the file in the repository to read it.";
-    }
-}
-
-sidebarItems.forEach((item) => {
-    item.addEventListener("click", () => {
-        sidebarItems.forEach((other) => other.classList.remove("active"));
-        item.classList.add("active");
-
-        if (fileName) fileName.textContent = item.textContent.trim();
-        loadExample(item.getAttribute("data-url"));
-    });
-});
-
-// Keep the inline example visible until a file is selected. This also avoids a
-// network round-trip (and a loading flash) on first paint.
-if (sidebarItems[0]) {
-    sidebarItems[0].classList.add("active");
-}
-
 // Highlight the current section in the docs sidebar.
 const tocLinks = Array.from(document.querySelectorAll(".docs-toc a[href^='#']"));
 if (tocLinks.length && "IntersectionObserver" in window) {
@@ -144,4 +108,26 @@ if (navToggle) {
     });
 
     window.matchMedia("(min-width: 761px)").addEventListener("change", () => setMenu(false));
+}
+
+// Docs sidebar: collapsible on small screens.
+const tocBox = document.querySelector(".docs-toc");
+const tocButton = document.querySelector(".toc-toggle");
+
+if (tocBox && tocButton) {
+    function setToc(open) {
+        tocBox.classList.toggle("open", open);
+        tocButton.setAttribute("aria-expanded", String(open));
+    }
+
+    tocButton.addEventListener("click", () => setToc(!tocBox.classList.contains("open")));
+
+    // Jumping to a section of this page closes the list.
+    tocBox.querySelectorAll('.toc-panel a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", () => setToc(false));
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setToc(false);
+    });
 }

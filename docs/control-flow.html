@@ -19,11 +19,10 @@
 			<nav class="site-nav" id="site-nav" aria-label="Main navigation">
 				<div class="site-nav-inner">
 					<a href="../index.html#why">Why</a>
-					<a href="../index.html#examples">Examples</a>
 					<a href="../index.html#security">Security</a>
 					<div class="nav-dropdown">
 						<button type="button" class="nav-dropbtn is-active" aria-haspopup="true" aria-expanded="false">Docs</button>
-						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
+						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="testing.html">Testing and dev mode</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
 					</div>
 				</div>
 			</nav>
@@ -31,8 +30,11 @@
 
 		<div class="docs-layout">
 			<aside class="docs-toc" aria-label="Documentation">
+				<button type="button" class="toc-toggle" aria-expanded="false" aria-controls="toc-panel"><span class="toc-toggle-label">Docs</span><span class="toc-toggle-current">Control flow and errors</span></button>
 				<p class="sidebar-title">Documentation</p>
-				<ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html" class="is-page" aria-current="page">Control flow and errors</a><ul class="toc-sub"><li><a href="#s6">if / elif / else</a></li><li><a href="#s7">Loops</a></li><li><a href="#s7a">Errors: try / catch / throw</a></li></ul></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul>
+				<div class="toc-panel" id="toc-panel">
+					<ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html" class="is-page" aria-current="page">Control flow and errors</a><ul class="toc-sub"><li><a href="#s6">if / elif / else</a></li><li><a href="#s7">Loops</a></li><li><a href="#s7a">Errors: try / catch / throw</a></li></ul></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="testing.html">Testing and dev mode</a></li><li><a href="legacy.html">Removed syntax</a></li></ul>
+				</div>
 			</aside>
 
 			<main class="docs-content">
@@ -78,10 +80,9 @@
 				<p>A scripting language for people who want to serve something without assembling a framework.</p>
 			</div>
 			<nav class="footer-nav" aria-label="Footer navigation">
-				<a href="index.html">Docs</a>
-				<a href="install.html">Install</a>
-				<a href="../index.html#examples">Examples</a>
-				<a href="../index.html#security">Security</a>
+				<a href="https://github.com/naclang/nac/tree/main/examples">Examples</a>
+				<a href="https://github.com/naclang/nac/blob/main/Roadmap.md">Roadmap</a>
+				<a href="https://github.com/naclang/nac">GitHub</a>
 			</nav>
 			<p class="copyright">&copy; <span data-year></span> NaC Language</p>
 		</footer>

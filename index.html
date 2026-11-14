@@ -19,25 +19,10 @@
 			<nav class="site-nav" id="site-nav" aria-label="Main navigation">
 				<div class="site-nav-inner">
 					<a href="#why">Why</a>
-					<a href="#examples">Examples</a>
 					<a href="#security">Security</a>
 					<div class="nav-dropdown">
 						<button type="button" class="nav-dropbtn" aria-haspopup="true" aria-expanded="false">Docs</button>
-						<div class="dropdown-menu">
-							<ul>
-								<li><a href="docs/index.html">Overview</a></li>
-								<li><a href="docs/install.html">Install</a></li>
-								<li><a href="docs/basics.html">Language basics</a></li>
-								<li><a href="docs/control-flow.html">Control flow and errors</a></li>
-								<li><a href="docs/functions.html">Functions</a></li>
-								<li><a href="docs/collections.html">Arrays and maps</a></li>
-								<li><a href="docs/io.html">I/O, files and builtins</a></li>
-								<li><a href="docs/server.html">HTTP server</a></li>
-								<li><a href="docs/security.html">Cookies, sessions and security</a></li>
-								<li><a href="docs/http-client.html">HTTP client and JSON</a></li>
-								<li><a href="docs/legacy.html">Removed syntax</a></li>
-							</ul>
-						</div>
+						<div class="dropdown-menu"><ul><li><a href="docs/index.html">Overview</a></li><li><a href="docs/install.html">Install</a></li><li><a href="docs/basics.html">Language basics</a></li><li><a href="docs/control-flow.html">Control flow and errors</a></li><li><a href="docs/functions.html">Functions</a></li><li><a href="docs/collections.html">Arrays and maps</a></li><li><a href="docs/io.html">I/O, files and builtins</a></li><li><a href="docs/server.html">HTTP server</a></li><li><a href="docs/security.html">Cookies, sessions and security</a></li><li><a href="docs/http-client.html">HTTP client and JSON</a></li><li><a href="docs/testing.html">Testing and dev mode</a></li><li><a href="docs/legacy.html">Removed syntax</a></li></ul></div>
 					</div>
 				</div>
 			</nav>
@@ -124,50 +109,10 @@
 					<p class="kicker">02 / Examples</p>
 					<h2>Complete servers, not fragments.</h2>
 					<p class="lead">Every file under <code>examples/web</code> is a runnable server. Start one from the project root and follow the <code>curl</code> commands at the top of the file.</p>
-				</div>
-
-				<div class="editor">
-					<div class="editor-sidebar">
-						<div class="sidebar-title">examples / web</div>
-						<ul>
-							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/01_hello.nac">01_hello.nac</li>
-							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/02_json_api.nac">02_json_api.nac</li>
-							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/03_guestbook.nac">03_guestbook.nac</li>
-							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/04_api_gateway.nac">04_api_gateway.nac</li>
-							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/05_http_client.nac">05_http_client.nac</li>
-							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/06_accounts.nac">06_accounts.nac</li>
-						</ul>
-					</div>
-
-					<div class="editor-main">
-						<div class="editor-topbar">
-							<span class="file-name">01_hello.nac</span>
-						</div>
-						<pre><code id="code-content">// examples/web/01_hello.nac
-users = ["Ada", "Turing", "Grace"]
-
-route GET "/" {
-    return "Welcome to a NaC web server!"
-}
-
-route GET "/hello" {
-    name = query.name or "world"
-    return `Hello, ${name}!`
-}
-
-route GET "/users/:id" {
-    id = toInt(params.id)
-    if id &lt; 0 or id &gt;= len(users) {
-        return json({ error: "no such user" }, 404)
-    }
-    return json({ id: id, name: users[id] })
-}
-
-serve(8080)</code></pre>
+					<div class="actions">
+						<a href="https://github.com/naclang/nac/tree/main/examples" class="btn btn-primary">Browse examples on GitHub</a>
 					</div>
 				</div>
-
-				<p class="note"><code>04_api_gateway.nac</code> and <code>05_http_client.nac</code> call public APIs and need internet access. <code>06_accounts.nac</code> keeps users in <code>accounts_users.json</code>; delete that file to reset the demo.</p>
 			</section>
 
 			<section id="security" class="section-dark">
@@ -293,10 +238,9 @@ curl http://localhost:8080/users/1</code></pre>
 				<p>A scripting language for people who want to serve something without assembling a framework.</p>
 			</div>
 			<nav class="footer-nav" aria-label="Footer navigation">
-				<a href="docs/index.html">Docs</a>
-				<a href="docs/install.html">Install</a>
-				<a href="index.html#examples">Examples</a>
-				<a href="index.html#security">Security</a>
+				<a href="https://github.com/naclang/nac/tree/main/examples">Examples</a>
+				<a href="https://github.com/naclang/nac/blob/main/Roadmap.md">Roadmap</a>
+				<a href="https://github.com/naclang/nac">GitHub</a>
 			</nav>
 			<p class="copyright">&copy; <span data-year></span> NaC Language</p>
 		</footer>

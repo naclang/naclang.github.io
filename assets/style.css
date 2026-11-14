@@ -337,6 +337,10 @@ pre code {
 	margin-top: 0.9rem;
 }
 
+.section-head .actions {
+	margin-top: 1.6rem;
+}
+
 .section-dark {
 	padding: clamp(3.5rem, 7vw, 6rem) max(1.25rem, calc((100% - 1180px) / 2));
 	background: var(--ink);
@@ -462,24 +466,8 @@ pre code {
 	font-size: 0.8em;
 }
 
-/* --------------------------------------------------------------------------
-   Example editor
-   -------------------------------------------------------------------------- */
 
-.editor {
-	display: grid;
-	grid-template-columns: 224px minmax(0, 1fr);
-	border: 1px solid var(--code-line);
-	border-radius: var(--radius);
-	overflow: hidden;
-	background: var(--code-bg);
-}
 
-.editor-sidebar {
-	padding: 0.8rem 0;
-	background: #0c1610;
-	border-right: 1px solid var(--code-line);
-}
 
 .sidebar-title {
 	padding: 0.55rem 1rem 0.3rem;
@@ -490,58 +478,12 @@ pre code {
 	color: var(--code-muted);
 }
 
-.editor-sidebar ul {
-	list-style: none;
-}
 
-.editor-sidebar li {
-	padding: 0.38rem 1rem;
-	border-left: 2px solid transparent;
-	font-family: var(--mono);
-	font-size: 0.73rem;
-	line-height: 1.5;
-	color: #a9b8ac;
-	cursor: pointer;
-	white-space: nowrap;
-}
 
-.editor-sidebar li:hover {
-	background: #17271d;
-	color: #fff;
-}
 
-.editor-sidebar li.active {
-	background: #17271d;
-	border-left-color: var(--accent);
-	color: #fff;
-}
 
-.editor-main {
-	display: flex;
-	min-width: 0;
-	flex-direction: column;
-}
 
-.editor-topbar {
-	padding: 0.58rem 0.9rem;
-	border-bottom: 1px solid var(--code-line);
-	background: var(--code-bar);
-	font-family: var(--mono);
-	font-size: 0.68rem;
-	letter-spacing: 0.06em;
-	color: #a9b8ac;
-}
 
-.editor-main pre {
-	margin: 0;
-	padding: 1.05rem;
-	max-height: 540px;
-	overflow: auto;
-	font-family: var(--mono);
-	font-size: 0.76rem;
-	line-height: 1.62;
-	color: var(--code-fg);
-}
 
 .note {
 	margin-top: 1rem;
@@ -1002,35 +944,11 @@ td code {
 		grid-template-columns: 1fr;
 	}
 
-	.editor {
-		grid-template-columns: 1fr;
-	}
 
-	.editor-sidebar {
-		padding: 0.35rem 0;
-		border-right: 0;
-		border-bottom: 1px solid var(--code-line);
-	}
 
-	.editor-sidebar .sidebar-title {
-		display: none;
-	}
 
-	.editor-sidebar ul {
-		display: flex;
-		flex-wrap: wrap;
-	}
 
-	.editor-sidebar li {
-		border-left: 0;
-		border-bottom: 2px solid transparent;
-		padding: 0.35rem 0.8rem;
-	}
 
-	.editor-sidebar li.active {
-		border-left-color: transparent;
-		border-bottom-color: var(--accent);
-	}
 
 	.stat-row {
 		grid-template-columns: 1fr;
@@ -1121,29 +1039,133 @@ td code {
 	min-width: 0;
 }
 
+.toc-toggle {
+	display: none;
+}
+
 @media (max-width: 860px) {
 	.docs-layout {
 		grid-template-columns: 1fr;
-		gap: 1.5rem;
+		gap: 1.2rem;
+		padding-top: 1.4rem;
 	}
 
+	/* The sidebar becomes a compact bar showing the current page; tapping it
+	   opens the page list (and the sections of the current page). */
 	.docs-toc {
 		position: static;
 		max-height: none;
-		padding: 0 0 1rem;
-		border-right: 0;
-		border-bottom: 1px solid var(--line);
+		overflow: visible;
+		padding: 0;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		background: rgba(255, 255, 255, 0.35);
 	}
 
-	.docs-toc ul {
+	.docs-toc .sidebar-title {
+		display: none;
+	}
+
+	.toc-toggle {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 0.1rem 0.9rem;
+		align-items: center;
+		gap: 0.9rem;
+		width: 100%;
+		min-height: 3rem;
+		padding: 0 1rem;
+		border: 0;
+		background: none;
+		font-family: var(--mono);
+		font-size: 0.78rem;
+		color: var(--ink);
+		text-align: left;
+		cursor: pointer;
+	}
+
+	.toc-toggle:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: -2px;
+	}
+
+	.toc-toggle-label {
+		flex: none;
+		font-size: 0.64rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--accent);
+	}
+
+	.toc-toggle-current {
+		flex: 1;
+		min-width: 0;
+		overflow: hidden;
+		font-weight: 500;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.toc-toggle::after {
+		content: "";
+		flex: none;
+		width: 0.42em;
+		height: 0.42em;
+		border-right: 1.5px solid var(--muted);
+		border-bottom: 1.5px solid var(--muted);
+		transform: translateY(-2px) rotate(45deg);
+		transition: transform 0.22s ease;
+	}
+
+	.docs-toc.open .toc-toggle::after {
+		transform: translateY(2px) rotate(225deg);
+	}
+
+	.toc-panel {
+		display: grid;
+		grid-template-rows: 0fr;
+		visibility: hidden;
+		transition:
+			grid-template-rows 0.28s ease,
+			visibility 0s linear 0.28s;
+	}
+
+	.docs-toc.open .toc-panel {
+		grid-template-rows: 1fr;
+		visibility: visible;
+		transition:
+			grid-template-rows 0.28s ease,
+			visibility 0s linear 0s;
+	}
+
+	.toc-panel > ul {
+		min-height: 0;
+		max-height: 65vh;
+		max-height: 65dvh;
+		overflow-y: auto;
+		border-top: 1px solid var(--line);
+	}
+
+	.toc-panel > ul > li + li {
+		border-top: 1px solid var(--line);
 	}
 
 	.docs-toc a {
-		padding-left: 0;
+		padding: 0.7rem 1rem;
+		font-size: 0.78rem;
+	}
+
+	.docs-toc a.is-page {
+		background: rgba(0, 112, 64, 0.06);
+	}
+
+	.toc-sub {
+		margin: 0;
 		border-left: 0;
+		background: rgba(0, 112, 64, 0.03);
+	}
+
+	.toc-sub a {
+		padding: 0.55rem 1rem 0.55rem 1.9rem;
+		font-size: 0.74rem;
 	}
 }
 
@@ -1591,4 +1613,30 @@ td code {
 
 .docs-content .doc-section {
 	padding: 1.6rem 0;
+}
+
+/* Mobile sidebar: these must come after the base .toc-sub rules above. */
+@media (max-width: 860px) {
+	.toc-sub {
+		margin: 0;
+		border-left: 0;
+	}
+
+	.toc-sub a {
+		padding: 0.55rem 1rem 0.55rem 1.9rem;
+		font-size: 0.74rem;
+	}
+
+	.docs-content .page-head .kicker {
+		display: none;
+	}
+}
+
+/* Docs: troubleshooting items are not numbered. */
+.docs-content .step {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.docs-content .step::before {
+	display: none;
 }

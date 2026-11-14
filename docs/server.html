@@ -19,11 +19,10 @@
 			<nav class="site-nav" id="site-nav" aria-label="Main navigation">
 				<div class="site-nav-inner">
 					<a href="../index.html#why">Why</a>
-					<a href="../index.html#examples">Examples</a>
 					<a href="../index.html#security">Security</a>
 					<div class="nav-dropdown">
 						<button type="button" class="nav-dropbtn is-active" aria-haspopup="true" aria-expanded="false">Docs</button>
-						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
+						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="testing.html">Testing and dev mode</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
 					</div>
 				</div>
 			</nav>
@@ -31,8 +30,11 @@
 
 		<div class="docs-layout">
 			<aside class="docs-toc" aria-label="Documentation">
+				<button type="button" class="toc-toggle" aria-expanded="false" aria-controls="toc-panel"><span class="toc-toggle-label">Docs</span><span class="toc-toggle-current">HTTP server</span></button>
 				<p class="sidebar-title">Documentation</p>
-				<ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html" class="is-page" aria-current="page">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul>
+				<div class="toc-panel" id="toc-panel">
+					<ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html" class="is-page" aria-current="page">HTTP server</a><ul class="toc-sub"><li><a href="#responses">Responses</a></li><li><a href="#request-helpers">Request helpers</a></li><li><a href="#templates">Templates</a></li><li><a href="#configuration">Configuration</a></li></ul></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="testing.html">Testing and dev mode</a></li><li><a href="legacy.html">Removed syntax</a></li></ul>
+				</div>
 			</aside>
 
 			<main class="docs-content">
@@ -65,7 +67,59 @@ serve(8080)                            <span class="comment">// blocking</span><
 <div class="terminal"><div class="terminal-bar"><span>responses.nac</span><span>NaC</span></div><pre><code>html(body)        html(body, status)
 json(value)       json(value, status)       <span class="comment">// application/json</span>
 redirect(url)     redirect(url, status)     <span class="comment">// 302 by default</span></code></pre></div>
-<p>Dynamic bodies and header values are limited to 8192 characters. Handlers run one at a time, so a slow route delays the others.</p></section>
+<p>Dynamic bodies and header values are limited to 8192 characters. Handlers run one at a time, so a slow route delays the others.</p>
+</section>
+<section id="request-helpers" class="doc-section"><h2>Request helpers</h2>
+<div class="table-wrap"><table><thead><tr><th>Function</th><th>Result</th></tr></thead><tbody><tr><td><code>form(body)</code></td><td>Parses an <code>application/x-www-form-urlencoded</code> request body into a map.</td></tr><tr><td><code>header(name, value)</code></td><td>A map holding that one response header.</td></tr><tr><td><code>cors(origin, methods, headers)</code></td><td>A map of CORS response headers for the origin, the allowed methods and the allowed request headers.</td></tr></tbody></table></div>
+<div class="terminal"><div class="terminal-bar"><span>request-helpers.nac</span><span>NaC</span></div><pre><code>ORIGIN = <span class="string">"http://localhost:3000"</span>
+
+<span class="keyword">route</span> OPTIONS <span class="string">"/api/greet"</span> {                      <span class="comment">// CORS preflight</span>
+    <span class="keyword">return</span> {
+        status: 204,
+        body: <span class="string">""</span>,
+        headers: cors(ORIGIN, <span class="string">"POST, OPTIONS"</span>, <span class="string">"Content-Type"</span>)
+    }
+}
+
+<span class="keyword">route</span> POST <span class="string">"/api/greet"</span> {
+    data = form(body)
+    <span class="keyword">if</span> <span class="keyword">not</span> (<span class="string">"name"</span> <span class="keyword">in</span> data) <span class="keyword">or</span> data.name == <span class="string">""</span> {
+        <span class="keyword">return</span> json({ error: <span class="string">"name is required"</span> }, 400)
+    }
+
+    headers = cors(ORIGIN, <span class="string">"POST, OPTIONS"</span>, <span class="string">"Content-Type"</span>)
+    extra = header(<span class="string">"X-NaC-Example"</span>, <span class="string">"request-helpers"</span>)
+    headers[<span class="string">"X-NaC-Example"</span>] = extra[<span class="string">"X-NaC-Example"</span>]
+    headers[<span class="string">"Content-Type"</span>] = <span class="string">"application/json; charset=utf-8"</span>
+
+    <span class="keyword">return</span> {
+        status: 200,
+        body: jsonStringify({ message: <span class="string">"Hello, "</span> + data.name }),
+        headers: headers
+    }
+}</code></pre></div>
+</section>
+<section id="templates" class="doc-section"><h2>Templates</h2>
+<p><code>render(path, values)</code> fills the <code>{{ name }}</code> placeholders of an HTML file. Values are HTML-escaped, so user input cannot inject markup. It returns an HTML response, so a route can return it directly. In the examples the path is relative to the project root, where the server is started.</p>
+<div class="terminal"><div class="terminal-bar"><span>templates.nac</span><span>NaC</span></div><pre><code><span class="comment">// examples/web/templates/greeting.html</span>
+<span class="comment">//   &lt;h1&gt;Hello, {{ name }}!&lt;/h1&gt;</span>
+
+<span class="keyword">route</span> GET <span class="string">"/hello/:name"</span> {
+    <span class="keyword">return</span> render(<span class="string">"examples/web/templates/greeting.html"</span>, {
+        title: params.name,
+        name: params.name
+    })
+}</code></pre></div>
+</section>
+<section id="configuration" class="doc-section"><h2>Configuration</h2>
+<p>At startup NaC loads a <code>.env</code> file from the working directory if there is one. Variables that are already set in the process environment take precedence over the file.</p>
+<ul class="plain-list"><li><code>env("PORT", "8080")</code> returns the default only when <code>PORT</code> is not set.</li><li><code>serve()</code> without a port uses <code>PORT</code> and falls back to 8080.</li><li>An explicit <code>serve(port)</code> overrides the configured value.</li></ul>
+<div class="terminal"><div class="terminal-bar"><span>.env</span><span>dotenv</span></div><pre><code>PORT=8081</code></pre></div>
+<div class="terminal"><div class="terminal-bar"><span>config.nac</span><span>NaC</span></div><pre><code><span class="keyword">route</span> GET <span class="string">"/"</span> {
+    <span class="keyword">return</span> json({ message: <span class="string">"Configuration loaded"</span>, port: env(<span class="string">"PORT"</span>, <span class="string">"8080"</span>) })
+}
+
+serve()      <span class="comment">// PORT from .env or the environment, else 8080</span></code></pre></div></section>
 
 				<nav class="doc-pager" aria-label="Pages"><a class="pager-prev" href="io.html"><span>Previous</span>I/O, files and builtins</a><a class="pager-next" href="security.html"><span>Next</span>Cookies, sessions and security</a></nav>
 			</main>
@@ -77,10 +131,9 @@ redirect(url)     redirect(url, status)     <span class="comment">// 302 by defa
 				<p>A scripting language for people who want to serve something without assembling a framework.</p>
 			</div>
 			<nav class="footer-nav" aria-label="Footer navigation">
-				<a href="index.html">Docs</a>
-				<a href="install.html">Install</a>
-				<a href="../index.html#examples">Examples</a>
-				<a href="../index.html#security">Security</a>
+				<a href="https://github.com/naclang/nac/tree/main/examples">Examples</a>
+				<a href="https://github.com/naclang/nac/blob/main/Roadmap.md">Roadmap</a>
+				<a href="https://github.com/naclang/nac">GitHub</a>
 			</nav>
 			<p class="copyright">&copy; <span data-year></span> NaC Language</p>
 		</footer>
