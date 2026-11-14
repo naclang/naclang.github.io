@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#007040" />
+		<meta name="description" content="NaC documentation: Routes, static files, responses and site hosting." />
+		<title>HTTP server · NaC Docs</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="../assets/style.css" />
+		<link rel="shortcut icon" href="../assets/logo.png" />
+	</head>
+	<body>
+		<header class="site-header">
+			<a href="../index.html" class="logo"><img src="../assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
+			<button type="button" class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><span class="nav-toggle-bar"></span></button>
+			<nav class="site-nav" id="site-nav" aria-label="Main navigation">
+				<div class="site-nav-inner">
+					<a href="../index.html#why">Why</a>
+					<a href="../index.html#examples">Examples</a>
+					<a href="../index.html#security">Security</a>
+					<div class="nav-dropdown">
+						<button type="button" class="nav-dropbtn is-active" aria-haspopup="true" aria-expanded="false">Docs</button>
+						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<div class="docs-layout">
+			<aside class="docs-toc" aria-label="Documentation">
+				<p class="sidebar-title">Documentation</p>
+				<ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html" class="is-page" aria-current="page">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul>
+			</aside>
+
+			<main class="docs-content">
+				<header class="page-head">
+					<p class="kicker">Docs</p>
+					<h1>HTTP server.</h1>
+					
+				</header>
+
+<section class="doc-section"><div class="terminal"><div class="terminal-bar"><span>server.nac</span><span>NaC</span></div><pre><code>static(<span class="string">"public"</span>)                       <span class="comment">// "/" -&gt; public/index.html, /app.css -&gt; public/app.css</span>
+static(<span class="string">"/assets"</span>, <span class="string">"public/assets"</span>)     <span class="comment">// mount a directory under a URL prefix</span>
+
+<span class="keyword">route</span> GET <span class="string">"/hello/:name"</span> {
+    <span class="keyword">return</span> html(<span class="string">`&lt;h1&gt;Hello, ${params.name}!&lt;/h1&gt;`</span>)
+}
+
+<span class="keyword">route</span> POST <span class="string">"/api/users"</span> {
+    data = jsonParse(body)
+    <span class="keyword">return</span> json(data, 201)
+}
+
+serve(8080)                            <span class="comment">// blocking</span></code></pre></div>
+<p><code>route METHOD "pattern" { ... }</code>: <code>METHOD</code> is <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code>, ... or <code>*</code> for any. Inside the body you have <code>method</code>, <code>path</code>, <code>query</code>, <code>headers</code>, <code>body</code>, <code>params</code> and <code>cookie</code> (see <a href="security.html">cookies</a>).</p>
+<ul class="plain-list"><li><code>:name</code> captures a path segment into <code>params.name</code> (URL-decoded); a trailing <code>*</code> captures the rest into <code>params["*"]</code>. Routes are tried in declaration order.</li><li>At most 128 routes.</li></ul>
+<p><code>static(dir)</code> / <code>static(prefix, dir)</code> serves GET/HEAD from a directory; directory URLs serve <code>index.html</code>; the MIME type comes from the extension; <code>..</code> is rejected. Files can be up to 32 MB; up to 8 mounts.</p>
+<p>Resolution order: routes, then static mounts, then <code>405</code> (the path matches a route for another method) or <code>404</code>.</p>
+</section>
+<section id="responses" class="doc-section"><h2>Responses</h2>
+<p>A route returns a string (200; <code>text/html</code> if it starts with <code>&lt;</code>, else <code>text/plain</code>), a map with <code>status</code>, <code>body</code> and <code>headers</code>, or one of:</p>
+<div class="terminal"><div class="terminal-bar"><span>responses.nac</span><span>NaC</span></div><pre><code>html(body)        html(body, status)
+json(value)       json(value, status)       <span class="comment">// application/json</span>
+redirect(url)     redirect(url, status)     <span class="comment">// 302 by default</span></code></pre></div>
+<p>Dynamic bodies and header values are limited to 8192 characters. Handlers run one at a time, so a slow route delays the others.</p></section>
+
+				<nav class="doc-pager" aria-label="Pages"><a class="pager-prev" href="io.html"><span>Previous</span>I/O, files and builtins</a><a class="pager-next" href="security.html"><span>Next</span>Cookies, sessions and security</a></nav>
+			</main>
+		</div>
+
+		<footer class="site-footer">
+			<div class="footer-brand">
+				<a href="../index.html" class="logo"><img src="../assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
+				<p>A scripting language for people who want to serve something without assembling a framework.</p>
+			</div>
+			<nav class="footer-nav" aria-label="Footer navigation">
+				<a href="index.html">Docs</a>
+				<a href="install.html">Install</a>
+				<a href="../index.html#examples">Examples</a>
+				<a href="../index.html#security">Security</a>
+			</nav>
+			<p class="copyright">&copy; <span data-year></span> NaC Language</p>
+		</footer>
+
+		<script src="../assets/script.js"></script>
+	</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#007040" />
+		<meta name="description" content="NaC documentation: Old syntax and functions that no longer exist." />
+		<title>Removed syntax · NaC Docs</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="../assets/style.css" />
+		<link rel="shortcut icon" href="../assets/logo.png" />
+	</head>
+	<body>
+		<header class="site-header">
+			<a href="../index.html" class="logo"><img src="../assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
+			<button type="button" class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><span class="nav-toggle-bar"></span></button>
+			<nav class="site-nav" id="site-nav" aria-label="Main navigation">
+				<div class="site-nav-inner">
+					<a href="../index.html#why">Why</a>
+					<a href="../index.html#examples">Examples</a>
+					<a href="../index.html#security">Security</a>
+					<div class="nav-dropdown">
+						<button type="button" class="nav-dropbtn is-active" aria-haspopup="true" aria-expanded="false">Docs</button>
+						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<div class="docs-layout">
+			<aside class="docs-toc" aria-label="Documentation">
+				<p class="sidebar-title">Documentation</p>
+				<ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html" class="is-page" aria-current="page">Removed syntax</a><ul class="toc-sub"><li><a href="#removed-in-v1-1-old-syntax">Removed in v1.1 (old syntax)</a></li><li><a href="#removed-the-old-http-client-functions">Removed: the old HTTP client functions</a></li></ul></li></ul>
+			</aside>
+
+			<main class="docs-content">
+				<header class="page-head">
+					<p class="kicker">Docs</p>
+					<h1>Removed syntax.</h1>
+					
+				</header>
+
+<section class="doc-section"></section>
+<section id="removed-in-v1-1-old-syntax" class="doc-section"><h2>Removed in v1.1 (old syntax)</h2>
+<div class="table-wrap"><table><thead><tr><th>Old</th><th>Use instead</th></tr></thead><tbody><tr><td><code>rn</code></td><td><code>return</code></td></tr><tr><td><code>out(...)</code></td><td><code>print</code></td></tr><tr><td><code>in(x)</code></td><td><code>input()</code></td></tr><tr><td><code>: { }</code> as else</td><td><code>else</code> / <code>elif</code></td></tr><tr><td>C-style <code>for (i = 0; ...; i++)</code></td><td><code>for i in range(...)</code> or <code>while</code></td></tr><tr><td><code>http("GET", url)</code></td><td><code>http.get { url: ... }</code></td></tr><tr><td><code>time()</code></td><td><code>now()</code></td></tr><tr><td><code>serve(port, "handler")</code></td><td><code>route</code></td></tr><tr><td>Mandatory <code>;</code></td><td>Not needed</td></tr></tbody></table></div>
+</section>
+<section id="removed-the-old-http-client-functions" class="doc-section"><h2>Removed: the old HTTP client functions</h2>
+<p><code>httpGet(url)</code>, <code>httpPost(url, body)</code>, <code>httpPut(url, body)</code>, <code>httpPatch(url, body)</code>, <code>httpDelete(url)</code>, <code>httpRequest(method, url)</code> and <code>httpJson(method, url)</code> are gone. Use <code>http.get { url: ... }</code>, <code>http.post { url: ..., body: ... }</code> etc. The parsed JSON that <code>httpJson</code> returned is <code>res.data</code>, the raw text is <code>res.body</code>.</p></section>
+
+				<nav class="doc-pager" aria-label="Pages"><a class="pager-prev" href="http-client.html"><span>Previous</span>HTTP client and JSON</a><span></span></nav>
+			</main>
+		</div>
+
+		<footer class="site-footer">
+			<div class="footer-brand">
+				<a href="../index.html" class="logo"><img src="../assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
+				<p>A scripting language for people who want to serve something without assembling a framework.</p>
+			</div>
+			<nav class="footer-nav" aria-label="Footer navigation">
+				<a href="index.html">Docs</a>
+				<a href="install.html">Install</a>
+				<a href="../index.html#examples">Examples</a>
+				<a href="../index.html#security">Security</a>
+			</nav>
+			<p class="copyright">&copy; <span data-year></span> NaC Language</p>
+		</footer>
+
+		<script src="../assets/script.js"></script>
+	</body>
+</html>

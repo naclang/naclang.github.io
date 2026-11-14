@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#007040" />
+		<meta name="description" content="NaC documentation: Outgoing requests, responses, callbacks and JSON." />
+		<title>HTTP client and JSON · NaC Docs</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="../assets/style.css" />
+		<link rel="shortcut icon" href="../assets/logo.png" />
+	</head>
+	<body>
+		<header class="site-header">
+			<a href="../index.html" class="logo"><img src="../assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
+			<button type="button" class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><span class="nav-toggle-bar"></span></button>
+			<nav class="site-nav" id="site-nav" aria-label="Main navigation">
+				<div class="site-nav-inner">
+					<a href="../index.html#why">Why</a>
+					<a href="../index.html#examples">Examples</a>
+					<a href="../index.html#security">Security</a>
+					<div class="nav-dropdown">
+						<button type="button" class="nav-dropbtn is-active" aria-haspopup="true" aria-expanded="false">Docs</button>
+						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<div class="docs-layout">
+			<aside class="docs-toc" aria-label="Documentation">
+				<p class="sidebar-title">Documentation</p>
+				<ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html" class="is-page" aria-current="page">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul>
+			</aside>
+
+			<main class="docs-content">
+				<header class="page-head">
+					<p class="kicker">Docs</p>
+					<h1>HTTP client and JSON.</h1>
+					
+				</header>
+
+<section class="doc-section"><div class="terminal"><div class="terminal-bar"><span>client.nac</span><span>NaC</span></div><pre><code>res = http.get { url: <span class="string">"https://api.example.com/users/1"</span> }
+<span class="keyword">print</span>(res.status, res.ok, res.data.name)
+
+res = http.post {
+    url: <span class="string">"https://api.example.com/users"</span>,
+    body: { name: <span class="string">"Ada"</span> },                  <span class="comment">// map/array -&gt; sent as JSON; string -&gt; sent as-is</span>
+    headers: { <span class="string">"Authorization"</span>: <span class="string">"Bearer abc"</span> },
+    timeout: 10                             <span class="comment">// seconds, default 30</span>
+}
+
+http.get {
+    url: <span class="string">"https://api.example.com/users"</span>,
+    callback: <span class="keyword">fn</span>(r) { <span class="keyword">print</span>(len(r.data), <span class="string">"users"</span>) }
+}
+
+jsonParse(text)   jsonStringify(value)</code></pre></div>
+<p><code>http.&lt;method&gt; { options }</code>: <code>&lt;method&gt;</code> is <code>get</code>, <code>post</code>, <code>put</code>, <code>patch</code> or <code>delete</code>; the options map must follow the method on the same line. Options:</p>
+<div class="table-wrap"><table><thead><tr><th>Key</th><th>Meaning</th></tr></thead><tbody><tr><td><code>url</code></td><td>Required, <code>http://</code> or <code>https://</code>.</td></tr><tr><td><code>body</code></td><td>String (sent as-is) or map/array (sent as JSON); not allowed for <code>get</code>.</td></tr><tr><td><code>headers</code></td><td>Map of header name to value (<code>Content-Type: application/json</code> is added when there is a body, unless you set it).</td></tr><tr><td><code>timeout</code></td><td>Seconds, default 30.</td></tr><tr><td><code>callback</code></td><td>Function called with the response when it arrives.</td></tr></tbody></table></div>
+</section>
+<section id="the-response" class="doc-section"><h2>The response</h2>
+<p>The response is a map, so it can be assigned to a variable:</p>
+<div class="table-wrap"><table><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody><tr><td><code>status</code></td><td>HTTP status code, <code>0</code> if no response was received.</td></tr><tr><td><code>ok</code></td><td><code>true</code> for 2xx.</td></tr><tr><td><code>body</code></td><td>Response text (limited to 8192 characters).</td></tr><tr><td><code>data</code></td><td>The body parsed as JSON when it is JSON, otherwise <code>null</code>.</td></tr><tr><td><code>error</code></td><td><code>null</code>, or a message when the request itself failed (no connection, timeout, ...).</td></tr></tbody></table></div>
+<p>HTTP 4xx/5xx and network failures do not stop the script: check <code>res.ok</code> (and <code>res.error</code>).</p>
+<p>A callback runs once the response is in, before the expression finishes (the call still blocks). The response is also the value of the expression. A callback can be an inline <code>fn(r) { ... }</code> or the name of a declared function.</p></section>
+
+				<nav class="doc-pager" aria-label="Pages"><a class="pager-prev" href="security.html"><span>Previous</span>Cookies, sessions and security</a><a class="pager-next" href="legacy.html"><span>Next</span>Removed syntax</a></nav>
+			</main>
+		</div>
+
+		<footer class="site-footer">
+			<div class="footer-brand">
+				<a href="../index.html" class="logo"><img src="../assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
+				<p>A scripting language for people who want to serve something without assembling a framework.</p>
+			</div>
+			<nav class="footer-nav" aria-label="Footer navigation">
+				<a href="index.html">Docs</a>
+				<a href="install.html">Install</a>
+				<a href="../index.html#examples">Examples</a>
+				<a href="../index.html#security">Security</a>
+			</nav>
+			<p class="copyright">&copy; <span data-year></span> NaC Language</p>
+		</footer>
+
+		<script src="../assets/script.js"></script>
+	</body>
+</html>

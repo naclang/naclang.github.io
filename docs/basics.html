@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#007040" />
+		<meta name="description" content="NaC documentation: Comments, keywords, data types, variables and operators." />
+		<title>Language basics · NaC Docs</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="../assets/style.css" />
+		<link rel="shortcut icon" href="../assets/logo.png" />
+	</head>
+	<body>
+		<header class="site-header">
+			<a href="../index.html" class="logo"><img src="../assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
+			<button type="button" class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><span class="nav-toggle-bar"></span></button>
+			<nav class="site-nav" id="site-nav" aria-label="Main navigation">
+				<div class="site-nav-inner">
+					<a href="../index.html#why">Why</a>
+					<a href="../index.html#examples">Examples</a>
+					<a href="../index.html#security">Security</a>
+					<div class="nav-dropdown">
+						<button type="button" class="nav-dropbtn is-active" aria-haspopup="true" aria-expanded="false">Docs</button>
+						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<div class="docs-layout">
+			<aside class="docs-toc" aria-label="Documentation">
+				<p class="sidebar-title">Documentation</p>
+				<ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html" class="is-page" aria-current="page">Language basics</a><ul class="toc-sub"><li><a href="#s1">Comments and statements</a></li><li><a href="#s2">Keywords</a></li><li><a href="#s3">Data types</a></li><li><a href="#s4">Variables</a></li><li><a href="#s5">Operators</a></li></ul></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul>
+			</aside>
+
+			<main class="docs-content">
+				<header class="page-head">
+					<p class="kicker">Docs</p>
+					<h1>Language basics.</h1>
+					
+				</header>
+
+<section id="s1" class="doc-section"><h2>Comments and statements</h2><div class="terminal"><div class="terminal-bar"><span>comments.nac</span><span>NaC</span></div><pre><code><span class="comment">// single-line comment</span>
+<span class="comment">/* block comment,
+   can span lines */</span>
+
+x = 1        <span class="comment">// no semicolon needed</span>
+y = 2; z = 3 <span class="comment">// ';' is only a separator for several statements on one line</span></code></pre></div>
+<p>A <code>(</code> or <code>[</code> at the start of a new line is never glued to the previous line.</p></section>
+<section id="s2" class="doc-section"><h2>Keywords</h2><div class="table-wrap"><table><thead><tr><th>Group</th><th>Keywords</th></tr></thead><tbody><tr><td>Functions</td><td><code>fn</code>, <code>return</code></td></tr><tr><td>Control</td><td><code>if</code>, <code>elif</code>, <code>else</code>, <code>for</code>, <code>in</code>, <code>while</code>, <code>break</code>, <code>continue</code></td></tr><tr><td>Logic</td><td><code>and</code>, <code>or</code>, <code>not</code></td></tr><tr><td>Output</td><td><code>print</code></td></tr><tr><td>Errors</td><td><code>try</code>, <code>catch</code>, <code>throw</code></td></tr><tr><td>Web</td><td><code>route</code></td></tr><tr><td>Literals</td><td><code>true</code>, <code>false</code>, <code>null</code></td></tr></tbody></table></div>
+<p>Everything else (<code>input</code>, <code>len</code>, <code>range</code>, <code>serve</code>, <code>json</code>, ...) is a normal builtin function, so it never clashes with your variable names.</p></section>
+<section id="s3" class="doc-section"><h2>Data types</h2><div class="table-wrap"><table><thead><tr><th>Type</th><th>Example</th></tr></thead><tbody><tr><td>int</td><td><code>42</code>, <code>-7</code></td></tr><tr><td>float</td><td><code>3.14</code></td></tr><tr><td>bool</td><td><code>true</code>, <code>false</code></td></tr><tr><td>null</td><td><code>null</code></td></tr><tr><td>string</td><td><code>"hello"</code> (escapes <code>\n \t \\ \"</code>), <code>`Hi ${name}`</code></td></tr><tr><td>array</td><td><code>[1, 2, 3]</code>, <code>[]</code>, <code>array(5)</code> (5 zeros)</td></tr><tr><td>map</td><td><code>{ name: "Ada", "age": 36 }</code>, <code>{}</code>, <code>map()</code></td></tr><tr><td>function</td><td><code>fn(a, b) { return a + b }</code>, or the bare name of a declared function</td></tr></tbody></table></div>
+<p><code>type(x)</code> returns <code>"int"</code>, <code>"float"</code>, <code>"bool"</code>, <code>"null"</code>, <code>"string"</code>, <code>"array"</code>, <code>"map"</code> or <code>"function"</code>. Strings are limited to 8192 characters, arrays to 10,000 elements.</p>
+<h3>Template strings (interpolation)</h3>
+<p>Backtick strings embed any expression with <code>${ }</code> (like JavaScript). Plain <code>"..."</code> strings never interpolate, so braces in JSON text are safe.</p>
+<div class="terminal"><div class="terminal-bar"><span>templates.nac</span><span>NaC</span></div><pre><code>name = <span class="string">"Ada"</span>
+<span class="keyword">print</span>(<span class="string">`Hello ${name}! ${age + 1} next year, ${user.tags[0]}, ${len(items)} items`</span>)
+
+html(<span class="string">`&lt;h1&gt;${title}&lt;/h1&gt;
+&lt;p&gt;${count &gt; 1 and "many" or "one"}&lt;/p&gt;`</span>)   <span class="comment">// may span several lines</span></code></pre></div>
+<p>Templates can span lines and nest. The result is limited to 8192 characters, like any string.</p></section>
+<section id="s4" class="doc-section"><h2>Variables</h2><p>Assignment is declaration, with no <code>let</code> or <code>var</code>:</p>
+<div class="terminal"><div class="terminal-bar"><span>variables.nac</span><span>NaC</span></div><pre><code>x = 5
+x += 1          <span class="comment">// also -= *= /=</span>
+x++             <span class="comment">// x--</span></code></pre></div>
+<p>Inside a function, assigning to a name that already exists (local, then global) updates it; otherwise a new local is created. Parameters are always new locals. Reading an undefined variable, an out-of-range index or a missing map key gives <code>null</code> (undefined variable and bad index also print an error).</p></section>
+<section id="s5" class="doc-section"><h2>Operators</h2><div class="table-wrap"><table><thead><tr><th>Operator</th><th>Meaning</th></tr></thead><tbody><tr><td><code>or</code>  <code>and</code></td><td>Logical, short-circuiting; return an operand (<code>x = a or "default"</code>).</td></tr><tr><td><code>not</code></td><td>Negation (also <code>!</code>). <code>&amp;&amp;</code> <code>||</code> <code>!</code> are accepted too.</td></tr><tr><td><code>==</code> <code>!=</code> <code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code></td><td>Comparison. No chaining: write <code>a &lt; b and b &lt; c</code>.</td></tr><tr><td><code>in</code>  <code>not in</code></td><td>Membership: <code>2 in [1, 2]</code>, <code>"k" in map</code>, <code>"ab" in "cab"</code>.</td></tr><tr><td><code>+</code> <code>-</code></td><td><code>+</code> concatenates when either side is a string.</td></tr><tr><td><code>*</code> <code>/</code> <code>%</code></td><td>Multiply, divide, modulo.</td></tr><tr><td><code>-x</code></td><td>Unary minus.</td></tr></tbody></table></div>
+<p>Use <code>pow(a, b)</code> instead of <code>**</code>. There are no bitwise operators and no ternary.</p></section>
+
+				<nav class="doc-pager" aria-label="Pages"><a class="pager-prev" href="install.html"><span>Previous</span>Install</a><a class="pager-next" href="control-flow.html"><span>Next</span>Control flow and errors</a></nav>
+			</main>
+		</div>
+
+		<footer class="site-footer">
+			<div class="footer-brand">
+				<a href="../index.html" class="logo"><img src="../assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
+				<p>A scripting language for people who want to serve something without assembling a framework.</p>
+			</div>
+			<nav class="footer-nav" aria-label="Footer navigation">
+				<a href="index.html">Docs</a>
+				<a href="install.html">Install</a>
+				<a href="../index.html#examples">Examples</a>
+				<a href="../index.html#security">Security</a>
+			</nav>
+			<p class="copyright">&copy; <span data-year></span> NaC Language</p>
+		</footer>
+
+		<script src="../assets/script.js"></script>
+	</body>
+</html>

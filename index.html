@@ -15,13 +15,31 @@
 	<body>
 		<header class="site-header">
 			<a href="index.html" class="logo"><img src="assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
-			<nav class="site-nav" aria-label="Main navigation">
-				<a href="#why">Why</a>
-				<a href="#examples">Examples</a>
-				<a href="#security">Security</a>
-				<a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md">Docs</a>
-				<a href="install.html">Install</a>
-				<a href="https://github.com/naclang/nac">GitHub</a>
+			<button type="button" class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><span class="nav-toggle-bar"></span></button>
+			<nav class="site-nav" id="site-nav" aria-label="Main navigation">
+				<div class="site-nav-inner">
+					<a href="#why">Why</a>
+					<a href="#examples">Examples</a>
+					<a href="#security">Security</a>
+					<div class="nav-dropdown">
+						<button type="button" class="nav-dropbtn" aria-haspopup="true" aria-expanded="false">Docs</button>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="docs/index.html">Overview</a></li>
+								<li><a href="docs/install.html">Install</a></li>
+								<li><a href="docs/basics.html">Language basics</a></li>
+								<li><a href="docs/control-flow.html">Control flow and errors</a></li>
+								<li><a href="docs/functions.html">Functions</a></li>
+								<li><a href="docs/collections.html">Arrays and maps</a></li>
+								<li><a href="docs/io.html">I/O, files and builtins</a></li>
+								<li><a href="docs/server.html">HTTP server</a></li>
+								<li><a href="docs/security.html">Cookies, sessions and security</a></li>
+								<li><a href="docs/http-client.html">HTTP client and JSON</a></li>
+								<li><a href="docs/legacy.html">Removed syntax</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
 			</nav>
 		</header>
 
@@ -32,8 +50,8 @@
 					<h1>A small language for web servers.</h1>
 					<p class="lead">NaC turns a file of routes into an HTTP server. Static files, JSON, cookies, sessions and an HTTP client are part of the language. So are the request limits and security headers.</p>
 					<div class="actions">
-						<a href="install.html" class="btn btn-primary">Install NaC</a>
-						<a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md" class="btn btn-secondary">Read the docs</a>
+						<a href="docs/install.html" class="btn btn-primary">Install NaC</a>
+						<a href="docs/index.html" class="btn btn-secondary">Read the docs</a>
 					</div>
 					<ul class="facts">
 						<li>Built-in JSON</li>
@@ -118,11 +136,6 @@
 							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/04_api_gateway.nac">04_api_gateway.nac</li>
 							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/05_http_client.nac">05_http_client.nac</li>
 							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/06_accounts.nac">06_accounts.nac</li>
-						</ul>
-						<div class="sidebar-title">examples / lang</div>
-						<ul>
-							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/lang/syntax.nac">syntax.nac</li>
-							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/lang/try.nac">try.nac</li>
 						</ul>
 					</div>
 
@@ -256,8 +269,8 @@ curl http://localhost:8080/users/1</code></pre>
 				</div>
 
 				<div class="actions">
-					<a href="install.html" class="btn btn-primary">Full install guide</a>
-					<a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md" class="btn btn-secondary">Documentation</a>
+					<a href="docs/install.html" class="btn btn-primary">Full install guide</a>
+					<a href="docs/index.html" class="btn btn-secondary">Documentation</a>
 				</div>
 			</section>
 
@@ -280,10 +293,10 @@ curl http://localhost:8080/users/1</code></pre>
 				<p>A scripting language for people who want to serve something without assembling a framework.</p>
 			</div>
 			<nav class="footer-nav" aria-label="Footer navigation">
-				<a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md">Docs</a>
-				<a href="install.html">Install</a>
-				<a href="https://github.com/naclang/nac/tree/main/examples">Examples</a>
-				<a href="https://github.com/naclang/nac/blob/main/Roadmap.md">Roadmap</a>
+				<a href="docs/index.html">Docs</a>
+				<a href="docs/install.html">Install</a>
+				<a href="index.html#examples">Examples</a>
+				<a href="index.html#security">Security</a>
 			</nav>
 			<p class="copyright">&copy; <span data-year></span> NaC Language</p>
 		</footer>

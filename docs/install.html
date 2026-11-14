@@ -1,49 +1,48 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="theme-color" content="#007040" />
-        <meta
-            name="description"
-            content="Build the NaC interpreter from source on Linux, macOS or Windows, run an example server and package a script as a standalone executable."
-        />
-        <title>Install NaC</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
-            rel="stylesheet"
-        />
-        <link rel="stylesheet" href="assets/style.css" />
-        <link rel="shortcut icon" href="assets/logo.png" />
-    </head>
-    <body>
-        <header class="site-header">
-            <a href="index.html" class="logo"><img src="assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
-            <nav class="site-nav" aria-label="Main navigation">
-                <a href="index.html#why">Why</a>
-                <a href="index.html#examples">Examples</a>
-                <a href="index.html#security">Security</a>
-                <a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md">Docs</a>
-                <a href="install.html" class="is-active">Install</a>
-                <a href="https://github.com/naclang/nac">GitHub</a>
-            </nav>
-        </header>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#007040" />
+		<meta name="description" content="NaC documentation: Build NaC from source on Linux, macOS or Windows, run an example server and package a script." />
+		<title>Install · NaC Docs</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="../assets/style.css" />
+		<link rel="shortcut icon" href="../assets/logo.png" />
+	</head>
+	<body>
+		<header class="site-header">
+			<a href="../index.html" class="logo"><img src="../assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
+			<button type="button" class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><span class="nav-toggle-bar"></span></button>
+			<nav class="site-nav" id="site-nav" aria-label="Main navigation">
+				<div class="site-nav-inner">
+					<a href="../index.html#why">Why</a>
+					<a href="../index.html#examples">Examples</a>
+					<a href="../index.html#security">Security</a>
+					<div class="nav-dropdown">
+						<button type="button" class="nav-dropbtn is-active" aria-haspopup="true" aria-expanded="false">Docs</button>
+						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
+					</div>
+				</div>
+			</nav>
+		</header>
 
-        <main class="page">
-            <header class="page-head">
-                <p class="kicker">Install</p>
-                <h1>Build NaC from source.</h1>
-                <p class="lead">
-                    NaC is a C program. You need a C compiler; on Unix you also need libcurl and OpenSSL's
-                    libcrypto. The Windows build uses WinHTTP and CNG, so no extra libraries are required.
-                </p>
-            </header>
+		<div class="docs-layout">
+			<aside class="docs-toc" aria-label="Documentation">
+				<p class="sidebar-title">Documentation</p>
+				<ul><li><a href="index.html">Overview</a></li><li><a href="install.html" class="is-page" aria-current="page">Install</a><ul class="toc-sub"><li><a href="#i1">Prerequisites</a></li><li><a href="#i2">Clone the repository</a></li><li><a href="#i3">Build the interpreter</a></li><li><a href="#i4">Verify the build</a></li><li><a href="#i5">Package a script</a></li><li><a href="#i6">Troubleshooting</a></li></ul></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="legacy.html">Removed syntax</a></li></ul>
+			</aside>
 
-            <section class="doc-section">
-                <h2>1. Prerequisites</h2>
-                <div class="table-wrap">
+			<main class="docs-content">
+				<header class="page-head">
+					<p class="kicker">Docs</p>
+					<h1>Build NaC from source.</h1>
+					<p class="lead">NaC is a C program. You need a C compiler; on Unix you also need libcurl and OpenSSL's libcrypto. The Windows build uses WinHTTP and CNG, so no extra libraries are required.</p>
+				</header>
+
+<section id="i1" class="doc-section"><h2>Prerequisites</h2><div class="table-wrap">
                     <table>
                         <thead>
                             <tr>
@@ -94,25 +93,16 @@ export PKG_CONFIG_PATH="$(brew --prefix openssl@3)/lib/pkgconfig:$PKG_CONFIG_PAT
                     <code>build.bat</code> looks for <code>cl.exe</code> first and falls back to <code>gcc</code>.
                     Install Visual Studio Build Tools with the Desktop development with C++ workload, or install
                     MinGW and make sure <code>gcc</code> is on <code>PATH</code>.
-                </div>
-            </section>
-
-            <section class="doc-section">
-                <h2>2. Clone the repository</h2>
-                <div class="terminal">
+                </div></section>
+<section id="i2" class="doc-section"><h2>Clone the repository</h2><div class="terminal">
                     <div class="terminal-bar">
                         <span>terminal</span>
                         <span>git</span>
                     </div>
                     <pre><code>git clone https://github.com/naclang/nac.git
 cd nac</code></pre>
-                </div>
-            </section>
-
-            <section class="doc-section">
-                <h2>3. Build the interpreter</h2>
-
-                <h3>Unix</h3>
+                </div></section>
+<section id="i3" class="doc-section"><h2>Build the interpreter</h2><h3>Unix</h3>
                 <div class="terminal">
                     <div class="terminal-bar">
                         <span>terminal</span>
@@ -134,12 +124,8 @@ cd nac</code></pre>
                     </div>
                     <pre><code>build.bat</code></pre>
                 </div>
-                <p>The build writes <code>nac.exe</code> in the project root.</p>
-            </section>
-
-            <section class="doc-section">
-                <h2>4. Verify the build</h2>
-                <p>Run the language tour first. It needs no network and no server:</p>
+                <p>The build writes <code>nac.exe</code> in the project root.</p></section>
+<section id="i4" class="doc-section"><h2>Verify the build</h2><p>Run the language tour first. It needs no network and no server:</p>
                 <div class="terminal">
                     <div class="terminal-bar">
                         <span>terminal</span>
@@ -171,12 +157,8 @@ curl http://localhost:8080/users/1</code></pre>
                     <code>04_api_gateway.nac</code> and <code>05_http_client.nac</code> call public APIs and need
                     internet access. <code>06_accounts.nac</code> writes <code>accounts_users.json</code> into the
                     working directory; delete that file to reset the demo.
-                </div>
-            </section>
-
-            <section class="doc-section">
-                <h2>5. Package a script</h2>
-                <p>
+                </div></section>
+<section id="i5" class="doc-section"><h2>Package a script</h2><p>
                     <code>nac build</code> embeds your script in a small C stub and compiles it with the same
                     interpreter sources. The result runs on its own; no <code>.nac</code> file or NaC install is
                     needed at runtime.
@@ -193,13 +175,9 @@ curl http://localhost:8080/users/1</code></pre>
                 <p>
                     This step still needs a C compiler and the <code>src/</code> directory next to the
                     <code>nac</code> executable. It is not a from-scratch compiler; it bundles the script with the
-                    runtime that was built in step 3.
-                </p>
-            </section>
-
-            <section class="doc-section">
-                <h2>6. Troubleshooting</h2>
-                <div class="steps">
+                    runtime built earlier.
+                </p></section>
+<section id="i6" class="doc-section"><h2>Troubleshooting</h2><div class="steps">
                     <div class="step">
                         <div>
                             <h3><code>curl/curl.h</code> is missing</h3>
@@ -215,7 +193,7 @@ curl http://localhost:8080/users/1</code></pre>
                             <p>
                                 Install <code>libssl-dev</code> (Debian/Ubuntu) or <code>openssl-devel</code>
                                 (Fedora). On macOS, install <code>openssl@3</code> and set
-                                <code>PKG_CONFIG_PATH</code> as shown in step 1.
+                                <code>PKG_CONFIG_PATH</code> as shown earlier.
                             </p>
                         </div>
                     </div>
@@ -243,34 +221,26 @@ curl http://localhost:8080/users/1</code></pre>
                             <p>Run <code>chmod +x build.sh</code> before starting the build.</p>
                         </div>
                     </div>
-                </div>
-            </section>
+                </div></section>
 
-            <section class="doc-section">
-                <h2>Next</h2>
-                <ul class="plain-list">
-                    <li><a href="https://github.com/naclang/nac#readme">Read the project overview</a></li>
-                    <li><a href="https://github.com/naclang/nac/tree/main/examples/web">Browse the web examples</a></li>
-                    <li><a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md">Open the full syntax reference</a></li>
-                    <li><a href="https://github.com/naclang/nac/blob/main/Roadmap.md">See what is shipped and what is next</a></li>
-                </ul>
-            </section>
-        </main>
+				<nav class="doc-pager" aria-label="Pages"><a class="pager-prev" href="index.html"><span>Previous</span>Overview</a><a class="pager-next" href="basics.html"><span>Next</span>Language basics</a></nav>
+			</main>
+		</div>
 
-        <footer class="site-footer">
-            <div class="footer-brand">
-                <a href="index.html" class="logo"><img src="assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
-                <p>A scripting language for people who want to serve something without assembling a framework.</p>
-            </div>
-            <nav class="footer-nav" aria-label="Footer navigation">
-                <a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md">Docs</a>
-                <a href="install.html">Install</a>
-                <a href="https://github.com/naclang/nac/tree/main/examples">Examples</a>
-                <a href="https://github.com/naclang/nac/blob/main/Roadmap.md">Roadmap</a>
-            </nav>
-            <p class="copyright">&copy; <span data-year></span> NaC Language</p>
-        </footer>
+		<footer class="site-footer">
+			<div class="footer-brand">
+				<a href="../index.html" class="logo"><img src="../assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
+				<p>A scripting language for people who want to serve something without assembling a framework.</p>
+			</div>
+			<nav class="footer-nav" aria-label="Footer navigation">
+				<a href="index.html">Docs</a>
+				<a href="install.html">Install</a>
+				<a href="../index.html#examples">Examples</a>
+				<a href="../index.html#security">Security</a>
+			</nav>
+			<p class="copyright">&copy; <span data-year></span> NaC Language</p>
+		</footer>
 
-        <script src="assets/script.js"></script>
-    </body>
+		<script src="../assets/script.js"></script>
+	</body>
 </html>
