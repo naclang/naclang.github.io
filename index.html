@@ -1,129 +1,293 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>NaC — Next-gen Programming Language</title>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap"
-            rel="stylesheet"
-        />
-        <link rel="stylesheet" href="assets/style.css" />
-        <link rel="shortcut icon" href="assets/logo.png" />
-    </head>
-    <body>
-        <div class="grid-bg"></div>
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#007040" />
+		<meta name="description" content="NaC is a small scripting language for web servers. Routes, static files, JSON, cookies, sessions, an HTTP client and security primitives in one native binary." />
+		<title>NaC</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="assets/style.css" />
+		<link rel="shortcut icon" href="assets/logo.png" />
+	</head>
+	<body>
+		<header class="site-header">
+			<a href="index.html" class="logo"><img src="assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
+			<nav class="site-nav" aria-label="Main navigation">
+				<a href="#why">Why</a>
+				<a href="#examples">Examples</a>
+				<a href="#security">Security</a>
+				<a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md">Docs</a>
+				<a href="install.html">Install</a>
+				<a href="https://github.com/naclang/nac">GitHub</a>
+			</nav>
+		</header>
 
-        <header>
-            <a href="#" class="logo">NaC</a>
-            <nav>
-                <a href="#why">Why NaC</a>
-                <a href="#learn">Learn</a>
-                <a href="docs.html">Docs</a>
-                <a href="https://github.com/naclang/nac">GitHub</a>
-            </nav>
-        </header>
+		<main>
+			<section class="hero">
+				<div class="hero-copy">
+					<p class="kicker">NaC / web servers</p>
+					<h1>A small language for web servers.</h1>
+					<p class="lead">NaC turns a file of routes into an HTTP server. Static files, JSON, cookies, sessions and an HTTP client are part of the language. So are the request limits and security headers.</p>
+					<div class="actions">
+						<a href="install.html" class="btn btn-primary">Install NaC</a>
+						<a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md" class="btn btn-secondary">Read the docs</a>
+					</div>
+					<ul class="facts">
+						<li>Built-in JSON</li>
+						<li>Security defaults</li>
+						<li>One native binary</li>
+					</ul>
+				</div>
 
-        <main>
-            <section class="hero">
-                <h1>NaC Language</h1>
-                <p>
-                    Next-generation programming language for modern developers. Simple syntax, powerful features,
-                    blazing fast execution.
-                </p>
-                <div class="hero-buttons">
-                    <a href="install.html" class="btn-primary">Get Started</a>
-                    <a href="#learn" class="btn-secondary">Learn More</a>
-                </div>
-            </section>
+				<div class="terminal">
+					<div class="terminal-bar">
+						<span>app.nac</span>
+						<span>NaC 1.1</span>
+					</div>
+					<pre><code>users = [<span class="string">"Ada"</span>, <span class="string">"Turing"</span>, <span class="string">"Grace"</span>]
 
-            <section id="why" class="features">
-                <h2 class="section-title scroll-reveal">Why NaC?</h2>
-                <div class="features-grid">
-                    <div class="feature-card scroll-reveal">
-                        <h3>Lightning Fast</h3>
-                        <p>Native C compilation ensures maximum performance. No runtime overhead, just pure speed.</p>
-                    </div>
-                    <div class="feature-card scroll-reveal">
-                        <h3>Simple Syntax</h3>
-                        <p>
-                            Clean, intuitive syntax that's easy to learn but powerful enough for complex applications.
-                        </p>
-                    </div>
-                    <div class="feature-card scroll-reveal">
-                        <h3>Dynamic Typing</h3>
-                        <p>Flexible type system with automatic conversions. Write less boilerplate, focus on logic.</p>
-                    </div>
-                    <div class="feature-card scroll-reveal">
-                        <h3>Array Support</h3>
-                        <p>First-class array support with powerful manipulation capabilities built right in.</p>
-                    </div>
-                    <div class="feature-card scroll-reveal">
-                        <h3>Expressive</h3>
-                        <p>
-                            Write beautiful, readable code with minimal syntax. Functions, loops, conditions - all
-                            elegant.
-                        </p>
-                    </div>
-                    <div class="feature-card scroll-reveal">
-                        <h3>Zero Dependencies</h3>
-                        <p>Single binary, no external dependencies. Compile with GCC and you're ready to go.</p>
-                    </div>
-                </div>
-            </section>
+<span class="keyword">route</span> GET <span class="string">"/users/:id"</span> {
+    id = toInt(params.id)
+    <span class="keyword">if</span> id &lt; 0 <span class="keyword">or</span> id &gt;= len(users) {
+        <span class="keyword">return</span> json({ error: <span class="string">"not found"</span> }, 404)
+    }
+    <span class="keyword">return</span> json({ id: id, name: users[id] })
+}
 
-            <section id="learn" class="editor-section">
-                <h2 class="section-title">Quick Examples</h2>
+<span class="keyword">route</span> POST <span class="string">"/users"</span> {
+    push(users, jsonParse(body).name)
+    <span class="keyword">return</span> json(users, 201)
+}
 
-                <div class="editor-container">
+<span class="keyword">serve</span>(8080)</code></pre>
+				</div>
+			</section>
 
-                    <!-- Sidebar -->
-                    <div class="editor-sidebar">
-                        <div class="sidebar-title">examples</div>
-                        <ul>
-                            <li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/bubble_sort.nac">bubble_sort.nac</li>
-                            <li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/fibonacci.nac">fibonacci.nac</li>
-                            <li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/find_max_num.nac">find_max_num.nac</li>
-                            <li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/http.nac">http.nac</li>
-                            <li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/guess.nac">guess.nac</li>
-                            <li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/in_proc.nac">in_proc.nac</li>
-                            <li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/prime.nac">prime.nac</li>
-                        </ul>
-                    </div>
+			<section id="why" class="section">
+				<div class="section-head">
+					<p class="kicker">01 / Why NaC</p>
+					<h2>The web parts are in the language.</h2>
+					<p class="lead">An endpoint, a static folder, JSON in and out, an outgoing API call, a login cookie. NaC keeps those close and leaves the framework stack behind.</p>
+				</div>
 
+				<div class="feature-grid">
+					<article class="feature">
+						<h3>Web-first syntax</h3>
+						<p><code>route</code>, <code>static</code> and <code>serve</code> are keywords. Path parameters, query strings, headers, bodies and cookies arrive as maps.</p>
+					</article>
+					<article class="feature">
+						<h3>JSON in, JSON out</h3>
+						<p><code>jsonParse(body)</code> reads a request; <code>json(value, status)</code> writes a response with the right content type. Validation is a normal <code>if</code>.</p>
+					</article>
+					<article class="feature">
+						<h3>Outgoing HTTP included</h3>
+						<p>Call another service with <code>http.get { url: ... }</code>, add headers and timeouts, or attach a callback. A failed request is a value, not a crash.</p>
+					</article>
+					<article class="feature">
+						<h3>Security built in</h3>
+						<p><code>HttpOnly</code> cookies, server-side session IDs, PBKDF2 password hashing, SHA-256, HMAC, base64 and a CSPRNG are standard builtins.</p>
+					</article>
+					<article class="feature">
+						<h3>Safer defaults</h3>
+						<p>Header and body limits, a request deadline, per-IP rate limiting, security headers and CR/LF header-injection protection are on without configuration.</p>
+					</article>
+					<article class="feature">
+						<h3>One small binary</h3>
+						<p><code>./nac build app.nac</code> bundles your script and the runtime into a standalone executable. Deployment is copying a file.</p>
+					</article>
+				</div>
+			</section>
 
-                    <!-- Editor -->
-                    <div class="editor-main">
-                        <div class="editor-topbar">
-                            <span class="file-name">variables.nac</span>
-                        </div>
+			<section id="examples" class="section">
+				<div class="section-head">
+					<p class="kicker">02 / Examples</p>
+					<h2>Complete servers, not fragments.</h2>
+					<p class="lead">Every file under <code>examples/web</code> is a runnable server. Start one from the project root and follow the <code>curl</code> commands at the top of the file.</p>
+				</div>
 
-                        <pre><code id="code-content"></code></pre>
-                    </div>
+				<div class="editor">
+					<div class="editor-sidebar">
+						<div class="sidebar-title">examples / web</div>
+						<ul>
+							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/01_hello.nac">01_hello.nac</li>
+							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/02_json_api.nac">02_json_api.nac</li>
+							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/03_guestbook.nac">03_guestbook.nac</li>
+							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/04_api_gateway.nac">04_api_gateway.nac</li>
+							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/05_http_client.nac">05_http_client.nac</li>
+							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/web/06_accounts.nac">06_accounts.nac</li>
+						</ul>
+						<div class="sidebar-title">examples / lang</div>
+						<ul>
+							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/lang/syntax.nac">syntax.nac</li>
+							<li data-url="https://raw.githubusercontent.com/naclang/nac/main/examples/lang/try.nac">try.nac</li>
+						</ul>
+					</div>
 
-                </div>
-            </section>
+					<div class="editor-main">
+						<div class="editor-topbar">
+							<span class="file-name">01_hello.nac</span>
+						</div>
+						<pre><code id="code-content">// examples/web/01_hello.nac
+users = ["Ada", "Turing", "Grace"]
 
-            <section class="cta">
-                <h2 class="scroll-reveal">Ready to Build?</h2>
-                <p class="scroll-reveal" style="font-size: 1.2rem; color: var(--text-dim); margin-bottom: 2rem">
-                    Join the NaC community and start creating amazing things today.
-                </p>
-                <div class="hero-buttons scroll-reveal">
-                    <a href="install.html" class="btn-primary">Install NaC</a>
-                    <a href="docs.html" class="btn-secondary">Read Docs</a>
-                </div>
-            </section>
-        </main>
-        <footer>
-            <p>
-                NaC Language | <a href="https://github.com/naclang/nac" target="_blank">GitHub</a>
-            </p>
-            <p style="margin-top: 1rem">Built with ❤️ for developers</p>
-        </footer>
-        <script src="assets/script.js"></script>
-    </body>
+route GET "/" {
+    return "Welcome to a NaC web server!"
+}
+
+route GET "/hello" {
+    name = query.name or "world"
+    return `Hello, ${name}!`
+}
+
+route GET "/users/:id" {
+    id = toInt(params.id)
+    if id &lt; 0 or id &gt;= len(users) {
+        return json({ error: "no such user" }, 404)
+    }
+    return json({ id: id, name: users[id] })
+}
+
+serve(8080)</code></pre>
+					</div>
+				</div>
+
+				<p class="note"><code>04_api_gateway.nac</code> and <code>05_http_client.nac</code> call public APIs and need internet access. <code>06_accounts.nac</code> keeps users in <code>accounts_users.json</code>; delete that file to reset the demo.</p>
+			</section>
+
+			<section id="security" class="section-dark">
+				<div class="section-head">
+					<p class="kicker">03 / Security</p>
+					<h2>Security is not an add-on.</h2>
+					<p class="lead">NaC ships the pieces a small backend needs: random IDs, password hashing, HMAC, constant-time comparison and cookies with safe defaults. Sessions stay explicit; you own the table, NaC gives you the primitives.</p>
+				</div>
+
+				<div class="split security-split">
+					<div class="security-copy">
+						<div class="security-group">
+							<h3 class="security-label">Sessions and cookies</h3>
+							<ul class="ticks">
+								<li><code>cookie.name</code> reads request cookies; <code>setCookie</code> emits one <code>Set-Cookie</code> header per call.</li>
+								<li><code>sessionId()</code> returns 32 random bytes as base64url. <code>passwordHash</code> uses 210,000 PBKDF2 rounds.</li>
+							</ul>
+						</div>
+						<div class="security-group">
+							<h3 class="security-label">Safe defaults</h3>
+							<ul class="ticks">
+								<li><code>sameSite: "None"</code> turns on <code>Secure</code> automatically; <code>HttpOnly</code> is on by default.</li>
+								<li>Response header names or values containing CR/LF are dropped, preventing header injection.</li>
+							</ul>
+						</div>
+						<a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md#13a-cookies-sessions-and-security" class="btn btn-light">Security and sessions</a>
+					</div>
+
+					<div class="terminal">
+						<div class="terminal-bar">
+							<span>login.nac</span>
+							<span>session cookie</span>
+						</div>
+						<pre><code><span class="keyword">route</span> POST <span class="string">"/login"</span> {
+    data = jsonParse(body)
+    user = findUser(data.username)
+    <span class="keyword">if</span> isNull(user) <span class="keyword">or</span> not passwordVerify(data.password, user.password) {
+        <span class="keyword">return</span> json({ error: <span class="string">"invalid credentials"</span> }, 401)
+    }
+
+    sid = sessionId()
+    sessions[sid] = { username: user.username, expires: now() + 86400 }
+    setCookie(<span class="string">"sid"</span>, sid, {
+        httpOnly: <span class="keyword">true</span>,
+        sameSite: <span class="string">"Lax"</span>,
+        maxAge: 86400
+    })
+    <span class="keyword">return</span> json({ ok: <span class="keyword">true</span> })
+}</code></pre>
+					</div>
+				</div>
+
+				<div class="hardening">
+					<div class="hardening-head">
+						<p class="kicker">Hardening defaults</p>
+						<p>Applied without configuration. TLS stays at the reverse proxy.</p>
+					</div>
+					<div class="stat-row">
+						<div class="stat">
+							<span class="stat-value">8191 B</span>
+							<span class="stat-label">request body, then 413</span>
+						</div>
+						<div class="stat">
+							<span class="stat-value">16 KiB</span>
+							<span class="stat-label">header block, then 431</span>
+						</div>
+						<div class="stat">
+							<span class="stat-value">10 s</span>
+							<span class="stat-label">read deadline, then 408</span>
+						</div>
+						<div class="stat">
+							<span class="stat-value">120 / min</span>
+							<span class="stat-label">per IP, then 429</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="start" class="section quickstart">
+				<div class="section-head">
+					<p class="kicker">04 / Quick start</p>
+					<h2>Build it, run it, call it.</h2>
+					<p class="lead">Windows uses <code>build.bat</code> and <code>nac.exe</code>. The commands below are the Unix path; the language is the same on both.</p>
+				</div>
+
+				<div class="terminal">
+					<div class="terminal-bar">
+						<span>terminal</span>
+						<span>bash</span>
+					</div>
+					<pre><code>git clone https://github.com/naclang/nac.git
+cd nac
+./build.sh                      <span class="comment"># build.bat on Windows</span>
+./nac examples/web/01_hello.nac
+
+<span class="comment"># in another terminal</span>
+curl "http://localhost:8080/hello?name=Ada"
+curl http://localhost:8080/users/1</code></pre>
+				</div>
+
+				<div class="actions">
+					<a href="install.html" class="btn btn-primary">Full install guide</a>
+					<a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md" class="btn btn-secondary">Documentation</a>
+				</div>
+			</section>
+
+			<section class="cta">
+				<div>
+					<p class="kicker">Ship it</p>
+					<h2>Build the server, not the stack.</h2>
+					<p>One language, one binary, and the web primitives already in place. NaC is young, and the roadmap is public about what is shipped and what is still missing.</p>
+				</div>
+				<div class="actions">
+					<a href="https://github.com/naclang/nac" class="btn btn-primary">View on GitHub</a>
+					<a href="https://github.com/naclang/nac/blob/main/Roadmap.md" class="btn btn-secondary">Roadmap</a>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-brand">
+				<a href="index.html" class="logo"><img src="assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
+				<p>A scripting language for people who want to serve something without assembling a framework.</p>
+			</div>
+			<nav class="footer-nav" aria-label="Footer navigation">
+				<a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md">Docs</a>
+				<a href="install.html">Install</a>
+				<a href="https://github.com/naclang/nac/tree/main/examples">Examples</a>
+				<a href="https://github.com/naclang/nac/blob/main/Roadmap.md">Roadmap</a>
+			</nav>
+			<p class="copyright">&copy; <span data-year></span> NaC Language</p>
+		</footer>
+
+		<script src="assets/script.js"></script>
+	</body>
 </html>

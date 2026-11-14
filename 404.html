@@ -3,48 +3,58 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>NaC — Next-gen Programming Language</title>
+        <meta name="theme-color" content="#007040" />
+        <meta name="description" content="The requested NaC page was not found." />
+        <title>Page not found — NaC</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap"
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
             rel="stylesheet"
         />
         <link rel="stylesheet" href="assets/style.css" />
         <link rel="shortcut icon" href="assets/logo.png" />
     </head>
     <body>
-        <div class="grid-bg"></div>
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-
-        <header>
-            <a href="/" class="logo">NaC</a>
-            <nav>
-                <a href="/#why">Why NaC</a>
-                <a href="/#learn">Learn</a>
-                <a href="docs.html">Docs</a>
+        <header class="site-header">
+            <a href="index.html" class="logo"><img src="assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="index.html#why">Why</a>
+                <a href="index.html#examples">Examples</a>
+                <a href="index.html#security">Security</a>
+                <a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md">Docs</a>
+                <a href="install.html">Install</a>
                 <a href="https://github.com/naclang/nac">GitHub</a>
             </nav>
         </header>
 
-        <main>
-            <section class="hero">
-                <h1>404 Not Found</h1>
-                <p>
-                    Oops! The page you're looking for doesn't exist. It might have been moved or deleted.
-                </p>
-                <div class="hero-buttons">
-                    <a href="install.html" class="btn-primary">Get Started</a>
-                    <a href="/" class="btn-secondary">Home</a>
-                </div>
-            </section>
-        </main>
-        
-        <footer>
-            <p>
-                NaC Language | <a href="https://github.com/naclang/nac" target="_blank">GitHub</a>
+        <main class="not-found">
+            <p class="kicker">Error 404</p>
+            <h1>That page is not here.</h1>
+            <p class="lead">
+                The URL may have changed when this site was reorganised, or the page may never have existed. The
+                documentation and the homepage are the shortest way back.
             </p>
-            <p style="margin-top: 1rem">Built with ❤️ for developers</p>
+            <div class="actions">
+                <a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md" class="btn btn-primary">Read the docs</a>
+                <a href="index.html" class="btn btn-secondary">Go home</a>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-brand">
+                <a href="index.html" class="logo"><img src="assets/logo.png" alt="" class="logo-img" width="32" height="32" />NaC</a>
+                <p>A scripting language for people who want to serve something without assembling a framework.</p>
+            </div>
+            <nav class="footer-nav" aria-label="Footer navigation">
+                <a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md">Docs</a>
+                <a href="install.html">Install</a>
+                <a href="https://github.com/naclang/nac/tree/main/examples">Examples</a>
+                <a href="https://github.com/naclang/nac/blob/main/Roadmap.md">Roadmap</a>
+            </nav>
+            <p class="copyright">&copy; <span data-year></span> NaC Language</p>
         </footer>
+
+        <script src="assets/script.js"></script>
     </body>
 </html>

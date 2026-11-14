@@ -1,65 +1,59 @@
-// Scroll reveal animation
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px",
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-        }
-    });
-}, observerOptions);
-
-document.querySelectorAll(".scroll-reveal").forEach((el) => {
-    observer.observe(el);
+// Current year in the footer.
+document.querySelectorAll("[data-year]").forEach((el) => {
+    el.textContent = new Date().getFullYear();
 });
 
-// Smooth scroll
+// Smooth scrolling for in-page links, leaving external or unknown anchors alone.
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute("href"));
-        if (target) {
-            target.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-            });
+    anchor.addEventListener("click", (event) => {
+        const href = anchor.getAttribute("href");
+
+        if (href === "#") {
+            event.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            return;
         }
+
+        const target = document.querySelector(href);
+        if (!target) return;
+
+        event.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
     });
 });
 
-const sidebarItems = document.querySelectorAll(".editor-sidebar li");
+// Example browser on the homepage.
+const sidebarItems = Array.from(document.querySelectorAll(".editor-sidebar li[data-url]"));
 const codeContent = document.getElementById("code-content");
 const fileName = document.querySelector(".file-name");
 
-async function loadFromGithub(url) {
+async function loadExample(url) {
+    if (!codeContent) return;
+
+    codeContent.textContent = "Loading...";
+
     try {
-        codeContent.textContent = "Loading...";
-
-        const res = await fetch(url);
-        const text = await res.text();
-
-        codeContent.textContent = text;
-    } catch (err) {
-        codeContent.textContent = "Error loading file.";
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(response.status);
+        codeContent.textContent = await response.text();
+    } catch (error) {
+        codeContent.textContent =
+            "Could not load " + url + "\n\n" + "Open the file in the repository to read it.";
     }
 }
 
-sidebarItems.forEach(item => {
+sidebarItems.forEach((item) => {
     item.addEventListener("click", () => {
-        sidebarItems.forEach(i => i.classList.remove("active"));
+        sidebarItems.forEach((other) => other.classList.remove("active"));
         item.classList.add("active");
 
-        const url = item.getAttribute("data-url");
-        fileName.textContent = item.textContent;
-
-        loadFromGithub(url);
+        if (fileName) fileName.textContent = item.textContent.trim();
+        loadExample(item.getAttribute("data-url"));
     });
 });
 
-// İlk dosyayı otomatik yükle
+// Keep the inline example visible until a file is selected. This also avoids a
+// network round-trip (and a loading flash) on first paint.
 if (sidebarItems[0]) {
-    sidebarItems[0].click();
+    sidebarItems[0].classList.add("active");
 }
