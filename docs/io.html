@@ -61,6 +61,8 @@
 								<li><a href="#s11">Input / output</a></li>
 								<li><a href="#s12">Files</a></li>
 								<li><a href="#s15">Conversion and builtins</a></li>
+								<li><a href="#time">Time and dates</a></li>
+								<li><a href="#sqlite">SQLite</a></li>
 							</ul>
 						</li>
 						<li><a href="server.html">HTTP server</a></li>
@@ -86,7 +88,7 @@
 name = input(<span class="string">"Name? "</span>)       <span class="comment">// reads a line (string); null at end of input</span>
 n = int(input())             <span class="comment">// convert explicitly</span>
 
-now()  sleep(ms)</code></pre>
+now()  sleep(ms)                <span class="comment">// seconds since epoch; pause for milliseconds</span></code></pre>
 					</div>
 				</section>
 				<section id="s12" class="doc-section">
@@ -104,9 +106,39 @@ now()  sleep(ms)</code></pre>
 toString toInt toFloat typeOf                     <span class="comment">// camelCase aliases</span>
 urlEncode(s) urlDecode(s)
 args()  env(<span class="string">"NAME"</span>)  env(<span class="string">"NAME"</span>, default)  exit(code)   <span class="comment">// CLI tools, configuration</span>
+array(n)  map()  range(end)  range(start, end)
+assert(condition)  assert(condition, message)
 sqrt pow sin cos tan abs floor ceil round log exp
 len upper lower trim replace substr indexOf contains split</code></pre>
 					</div>
+					<p><code>array(n)</code> creates an array of <code>n</code> zeros; <code>map()</code> creates an empty map. <code>range(end)</code> returns integers from 0 up to (but not including) <code>end</code>; <code>range(start, end)</code> starts at <code>start</code>. <code>assert</code> raises an error when its condition is false, optionally using the supplied message. Arrays are limited to 10,000 elements.</p>
+				</section>
+				<section id="time" class="doc-section">
+					<h2>Time and dates</h2>
+					<div class="terminal">
+						<div class="terminal-bar"><span>time.nac</span><span>NaC</span></div>
+						<pre><code>now()                                      <span class="comment">// seconds since Unix epoch (int)</span>
+nowMs()                                    <span class="comment">// milliseconds since Unix epoch (float)</span>
+formatTime(now())                          <span class="comment">// ISO 8601 UTC text</span>
+formatTime(now(), <span class="string">"%F %T"</span>, <span class="string">"+03:00"</span>)       <span class="comment">// fixed time-zone offset</span>
+parseTime(<span class="string">"2024-11-14T16:00:00Z"</span>)          <span class="comment">// timestamp in seconds, or null</span>
+parseTime(<span class="string">"14/Nov/2024 04:00 PM"</span>, <span class="string">"%d/%b/%Y %I:%M %p"</span>)</code></pre>
+					</div>
+					<p><code>formatTime(timestamp, format, zone)</code> accepts a seconds-since-epoch timestamp, an optional C-style format (default ISO 8601), and an optional zone: <code>"utc"</code> (default), <code>"local"</code>, or a fixed offset such as <code>"+03:00"</code>. <code>parseTime(text, format)</code> accepts an optional format and returns <code>null</code> if the text cannot be parsed.</p>
+				</section>
+				<section id="sqlite" class="doc-section">
+					<h2>SQLite</h2>
+					<p>SQLite functions are available in builds compiled with SQLite support. <code>dbOpen</code> returns a database handle, or <code>null</code> if opening fails.</p>
+					<div class="terminal">
+						<div class="terminal-bar"><span>database.nac</span><span>NaC</span></div>
+						<pre><code>db = dbOpen(<span class="string">"app.db"</span>)              <span class="comment">// use ":memory:" for a temporary database</span>
+dbExec(db, <span class="string">"CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, title TEXT)"</span>)
+dbExec(db, <span class="string">"INSERT INTO notes (title) VALUES (?)"</span>, [title])
+rows = dbQuery(db, <span class="string">"SELECT * FROM notes"</span>)            <span class="comment">// array of row maps</span>
+note = dbGet(db, <span class="string">"SELECT * FROM notes WHERE id = ?"</span>, [id]) <span class="comment">// first row or null</span>
+dbClose(db)</code></pre>
+					</div>
+					<p><code>dbExec(db, sql, params)</code> runs a statement and returns a map with <code>changes</code> and <code>lastId</code>; <code>dbQuery</code> returns all rows and <code>dbGet</code> returns the first row or <code>null</code>. Bind values using an array for <code>?</code> placeholders or a map for named placeholders such as <code>:title</code>—do not concatenate values into SQL. Text, numbers, booleans and <code>null</code> can be bound. Use SQL statements for transactions (<code>BEGIN</code>, <code>COMMIT</code>, <code>ROLLBACK</code>).</p>
 				</section>
 
 				<nav class="doc-pager" aria-label="Pages">

@@ -61,6 +61,7 @@
 							<ul class="toc-sub">
 								<li><a href="#responses">Responses</a></li>
 								<li><a href="#request-helpers">Request helpers</a></li>
+								<li><a href="#middleware">Middleware</a></li>
 								<li><a href="#templates">Templates</a></li>
 								<li><a href="#configuration">Configuration</a></li>
 							</ul>
@@ -135,6 +136,10 @@ redirect(url)     redirect(url, status)     <span class="comment">// 302 by defa
 									<td>A map holding that one response header.</td>
 								</tr>
 								<tr>
+									<td><code>setHeader(name, value)</code> / <code>setHeader(headers)</code></td>
+									<td>Adds one response header or a map of headers to the current response, including responses from static files.</td>
+								</tr>
+								<tr>
 									<td><code>cors(origin, methods, headers)</code></td>
 									<td>A map of CORS response headers for the origin, the allowed methods and the allowed request headers.</td>
 								</tr>
@@ -172,6 +177,24 @@ redirect(url)     redirect(url, status)     <span class="comment">// 302 by defa
 }</code></pre>
 					</div>
 				</section>
+				<section id="middleware" class="doc-section">
+					<h2>Middleware</h2>
+					<p><code>before</code> blocks run before route matching; <code>after</code> blocks run after a response is produced. Blocks run in declaration order, with up to 32 registered blocks.</p>
+					<div class="terminal">
+						<div class="terminal-bar"><span>middleware.nac</span><span>NaC</span></div>
+						<pre><code><span class="keyword">before</span> <span class="string">"/admin/*"</span> {
+    <span class="keyword">if</span> (headers.authorization <span class="keyword">or</span> <span class="string">""</span>) != <span class="string">"Bearer "</span> + env(<span class="string">"ADMIN_TOKEN"</span>) {
+        <span class="keyword">return</span> json({ error: <span class="string">"unauthorized"</span> }, 401)
+    }
+}
+
+<span class="keyword">after</span> {
+    setHeader(cors(<span class="string">"*"</span>))
+    <span class="keyword">print</span>(<span class="string">`${method} ${path} -> ${response.status}`</span>)
+}</code></pre>
+					</div>
+					<p>An unfiltered <code>before</code> block runs for every request. Use <code>before "pattern"</code> to limit it to matching paths. A before block can read the request fields (<code>method</code>, <code>path</code>, <code>query</code>, <code>headers</code>, <code>body</code>, <code>params</code>, <code>cookie</code>); returning a response short-circuits routing. An after block also receives <code>response</code> (<code>status</code>, <code>body</code>, <code>headers</code>) and may return a replacement. Middleware does not run for requests rejected before script handling (400, 408, 413, 429, 431), or the built-in <code>/health</code> endpoint.</p>
+				</section>
 				<section id="templates" class="doc-section">
 					<h2>Templates</h2>
 					<p><code>render(path, values)</code> fills the <code>{{ name }}</code> placeholders of an HTML file. Values are HTML-escaped, so user input cannot inject markup. It returns an HTML response, so a route can return it directly. In the examples the path is relative to the project root, where the server is started.</p>
@@ -195,6 +218,7 @@ redirect(url)     redirect(url, status)     <span class="comment">// 302 by defa
 						<li><code>env("PORT", "8080")</code> returns the default only when <code>PORT</code> is not set.</li>
 						<li><code>serve()</code> without a port uses <code>PORT</code> and falls back to 8080.</li>
 						<li>An explicit <code>serve(port)</code> overrides the configured value.</li>
+						<li><code>serve(port, host)</code> can also select the bind host. Command-line <code>--port</code> and <code>--host</code> override the script; <code>--port</code> takes priority over <code>serve(port)</code>.</li>
 					</ul>
 					<div class="terminal">
 						<div class="terminal-bar"><span>.env</span><span>dotenv</span></div>
@@ -208,6 +232,89 @@ redirect(url)     redirect(url, status)     <span class="comment">// 302 by defa
 
 serve()      <span class="comment">// PORT from .env or the environment, else 8080</span></code></pre>
 					</div>
+					<h3>Server options</h3>
+					<p>Pass these flags to <code>nac</code> or the built executable; each may also be set with the listed environment variable. Command-line values take precedence. Numeric ranges are inclusive.</p>
+					<div class="table-wrap">
+						<table>
+							<thead>
+								<tr>
+									<th>Flag</th>
+									<th>Environment</th>
+									<th>Default</th>
+									<th>Meaning</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><code>--host ADDR</code></td>
+									<td><code>NAC_HOST</code></td>
+									<td><code>0.0.0.0</code></td>
+									<td>IPv4 bind address or hostname.</td>
+								</tr>
+								<tr>
+									<td><code>--port N</code></td>
+									<td><code>PORT</code></td>
+									<td><code>8080</code></td>
+									<td>Listen port, 1–65535.</td>
+								</tr>
+								<tr>
+									<td><code>--max-connections N</code></td>
+									<td><code>NAC_MAX_CONNECTIONS</code></td>
+									<td><code>64</code></td>
+									<td>Open connections, 1–4096.</td>
+								</tr>
+								<tr>
+									<td><code>--workers N</code></td>
+									<td><code>NAC_WORKERS</code></td>
+									<td><code>8</code></td>
+									<td>Request worker threads, 1–256 (Unix; Windows uses a thread per connection).</td>
+								</tr>
+								<tr>
+									<td><code>--read-timeout-ms N</code></td>
+									<td><code>NAC_READ_TIMEOUT_MS</code></td>
+									<td><code>10000</code></td>
+									<td>Whole-request read deadline, 100–600000 ms.</td>
+								</tr>
+								<tr>
+									<td><code>--max-header-bytes N</code></td>
+									<td><code>NAC_MAX_HEADER_BYTES</code></td>
+									<td><code>16384</code></td>
+									<td>Header-block limit, 1024–32768 bytes.</td>
+								</tr>
+								<tr>
+									<td><code>--max-body-bytes N</code></td>
+									<td><code>NAC_MAX_BODY_BYTES</code></td>
+									<td><code>1048576</code></td>
+									<td>Request-body limit, up to 67108864 bytes (64 MiB).</td>
+								</tr>
+								<tr>
+									<td><code>--rate-limit N</code></td>
+									<td><code>NAC_RATE_LIMIT_MAX</code></td>
+									<td><code>120</code></td>
+									<td>Requests per client IP per window; 0 disables the limiter.</td>
+								</tr>
+								<tr>
+									<td><code>--rate-window-sec N</code></td>
+									<td><code>NAC_RATE_LIMIT_WINDOW_SEC</code></td>
+									<td><code>60</code></td>
+									<td>Rate-limit window, 1–86400 seconds.</td>
+								</tr>
+								<tr>
+									<td><code>--health</code></td>
+									<td><code>NAC_HEALTH</code></td>
+									<td>off</td>
+									<td>Enable built-in <code>GET</code>/<code>HEAD /health</code>, returning 200 and <code>{"status":"ok"}</code>. A script's <code>GET /health</code> route takes precedence.</td>
+								</tr>
+								<tr>
+									<td><code>--shutdown-timeout-ms N</code></td>
+									<td><code>NAC_SHUTDOWN_TIMEOUT_MS</code></td>
+									<td><code>10000</code></td>
+									<td>Graceful shutdown wait, 0–600000 ms; 0 exits without waiting.</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<p>For example, <code>./nac --host 127.0.0.1 --port 8080 --health app.nac</code> listens only on loopback and enables the health probe. See the <a href="https://github.com/naclang/nac/blob/main/docs/DEPLOYMENT.md">deployment guide</a> for proxy and deployment details.</p>
 				</section>
 
 				<nav class="doc-pager" aria-label="Pages">

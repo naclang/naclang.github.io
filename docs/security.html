@@ -61,6 +61,7 @@
 							<a href="security.html" class="is-page" aria-current="page">Cookies, sessions and security</a>
 							<ul class="toc-sub">
 								<li><a href="#security-primitives">Security primitives</a></li>
+								<li><a href="#jwt">JWT</a></li>
 								<li><a href="#sessions">Sessions</a></li>
 								<li><a href="#server-hardening-always-on">Server hardening (always on)</a></li>
 							</ul>
@@ -154,6 +155,17 @@
 						</table>
 					</div>
 					<p>Password hashes look like <code>pbkdf2-sha256$&lt;iterations&gt;$&lt;salt_b64&gt;$&lt;hash_b64&gt;</code> (random 16-byte salt, 210,000 iterations, 32-byte key). The cost can be raised later without invalidating existing hashes.</p>
+				</section>
+				<section id="jwt" class="doc-section">
+					<h2>JWT</h2>
+					<p><code>jwtSign(payload, secret)</code> signs a claims map as an HS256 token. Include time claims such as <code>exp</code> yourself; <code>now()</code> returns seconds since the Unix epoch.</p>
+					<div class="terminal">
+						<div class="terminal-bar"><span>jwt.nac</span><span>NaC</span></div>
+						<pre><code>secret = env(<span class="string">"JWT_SECRET"</span>)
+token = jwtSign({ sub: <span class="string">"ada"</span>, exp: now() + 3600 }, secret)
+claims = jwtVerify(token, secret)       <span class="comment">// claims map, or null</span></code></pre>
+					</div>
+					<p><code>jwtVerify(token, secret)</code> verifies HS256 signatures and returns the claims map, or <code>null</code> for a malformed token, invalid signature, expired <code>exp</code> or future <code>nbf</code>. Times are in seconds and are checked without leeway. Keep the signing secret outside source code and use a strong random value.</p>
 				</section>
 				<section id="sessions" class="doc-section">
 					<h2>Sessions</h2>
