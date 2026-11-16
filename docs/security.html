@@ -22,7 +22,22 @@
 					<a href="../index.html#security">Security</a>
 					<div class="nav-dropdown">
 						<button type="button" class="nav-dropbtn is-active" aria-haspopup="true" aria-expanded="false">Docs</button>
-						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="testing.html">Testing and dev mode</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="index.html">Overview</a></li>
+								<li><a href="install.html">Install</a></li>
+								<li><a href="basics.html">Language basics</a></li>
+								<li><a href="control-flow.html">Control flow and errors</a></li>
+								<li><a href="functions.html">Functions</a></li>
+								<li><a href="collections.html">Arrays and maps</a></li>
+								<li><a href="io.html">I/O, files and builtins</a></li>
+								<li><a href="server.html">HTTP server</a></li>
+								<li><a href="security.html">Cookies, sessions and security</a></li>
+								<li><a href="http-client.html">HTTP client and JSON</a></li>
+								<li><a href="testing.html">Testing and dev mode</a></li>
+								<li><a href="legacy.html">Removed syntax</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</nav>
@@ -33,7 +48,27 @@
 				<button type="button" class="toc-toggle" aria-expanded="false" aria-controls="toc-panel"><span class="toc-toggle-label">Docs</span><span class="toc-toggle-current">Cookies, sessions and security</span></button>
 				<p class="sidebar-title">Documentation</p>
 				<div class="toc-panel" id="toc-panel">
-					<ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html" class="is-page" aria-current="page">Cookies, sessions and security</a><ul class="toc-sub"><li><a href="#security-primitives">Security primitives</a></li><li><a href="#sessions">Sessions</a></li><li><a href="#server-hardening-always-on">Server hardening (always on)</a></li></ul></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="testing.html">Testing and dev mode</a></li><li><a href="legacy.html">Removed syntax</a></li></ul>
+					<ul>
+						<li><a href="index.html">Overview</a></li>
+						<li><a href="install.html">Install</a></li>
+						<li><a href="basics.html">Language basics</a></li>
+						<li><a href="control-flow.html">Control flow and errors</a></li>
+						<li><a href="functions.html">Functions</a></li>
+						<li><a href="collections.html">Arrays and maps</a></li>
+						<li><a href="io.html">I/O, files and builtins</a></li>
+						<li><a href="server.html">HTTP server</a></li>
+						<li>
+							<a href="security.html" class="is-page" aria-current="page">Cookies, sessions and security</a>
+							<ul class="toc-sub">
+								<li><a href="#security-primitives">Security primitives</a></li>
+								<li><a href="#sessions">Sessions</a></li>
+								<li><a href="#server-hardening-always-on">Server hardening (always on)</a></li>
+							</ul>
+						</li>
+						<li><a href="http-client.html">HTTP client and JSON</a></li>
+						<li><a href="testing.html">Testing and dev mode</a></li>
+						<li><a href="legacy.html">Removed syntax</a></li>
+					</ul>
 				</div>
 			</aside>
 
@@ -41,12 +76,14 @@
 				<header class="page-head">
 					<p class="kicker">Docs</p>
 					<h1>Cookies, sessions and security.</h1>
-					
 				</header>
 
-<section class="doc-section"><p>Inside a <code>route</code>, <code>cookie</code> is a map of request cookie names to values, so <code>Cookie: sid=abc; theme=dark</code> becomes <code>cookie.sid</code> and <code>cookie.theme</code>. Values are kept raw (not URL-decoded); call <code>urlDecode()</code> when needed.</p>
-<p>Set cookies from inside a route. Each call appends one <code>Set-Cookie</code> header to the current response (at most 16 per response):</p>
-<div class="terminal"><div class="terminal-bar"><span>cookies.nac</span><span>NaC</span></div><pre><code><span class="keyword">route</span> POST <span class="string">"/login"</span> {
+				<section class="doc-section">
+					<p>Inside a <code>route</code>, <code>cookie</code> is a map of request cookie names to values, so <code>Cookie: sid=abc; theme=dark</code> becomes <code>cookie.sid</code> and <code>cookie.theme</code>. Values are kept raw (not URL-decoded); call <code>urlDecode()</code> when needed.</p>
+					<p>Set cookies from inside a route. Each call appends one <code>Set-Cookie</code> header to the current response (at most 16 per response):</p>
+					<div class="terminal">
+						<div class="terminal-bar"><span>cookies.nac</span><span>NaC</span></div>
+						<pre><code><span class="keyword">route</span> POST <span class="string">"/login"</span> {
     sid = sessionId()                    <span class="comment">// 32 random bytes, base64url (43 chars)</span>
     setCookie(<span class="string">"sid"</span>, sid, {
         path: <span class="string">"/"</span>,
@@ -61,17 +98,69 @@
 <span class="keyword">route</span> POST <span class="string">"/logout"</span> {
     clearCookie(<span class="string">"sid"</span>, { path: <span class="string">"/"</span> })
     <span class="keyword">return</span> json({ ok: <span class="keyword">true</span> })
-}</code></pre></div>
-<p>Cookie defaults: <code>path: "/"</code>, <code>httpOnly: true</code>, <code>secure: false</code>, <code>sameSite: "Lax"</code>, and no <code>Max-Age</code>/<code>Expires</code>. <code>sameSite: "None"</code> automatically turns on <code>Secure</code>. <code>clearCookie</code> emits <code>Max-Age=0</code> and an <code>Expires</code> date in the past. Names must be HTTP tokens, values may not contain <code>;</code> or control characters, and both functions return <code>false</code> on invalid input. <code>expires</code> (an HTTP date string) and <code>domain</code> are also accepted.</p>
-</section>
-<section id="security-primitives" class="doc-section"><h2>Security primitives</h2>
-<p>Built in, no imports:</p>
-<div class="table-wrap"><table><thead><tr><th>Function</th><th>Result</th></tr></thead><tbody><tr><td><code>randomBytes(n)</code></td><td><code>2*n</code> lowercase hex characters from a CSPRNG; <code>n</code> is 1..4095.</td></tr><tr><td><code>uuid()</code></td><td>Random (v4) UUID string.</td></tr><tr><td><code>sessionId()</code></td><td>32 random bytes as 43-character base64url text.</td></tr><tr><td><code>sha256(s)</code></td><td>SHA-256 of <code>s</code> as 64 lowercase hex characters.</td></tr><tr><td><code>hmac(key, message)</code></td><td>HMAC-SHA256 as 64 lowercase hex characters.</td></tr><tr><td><code>base64Encode(s)</code> / <code>base64Decode(s)</code></td><td>Standard base64 with <code>=</code> padding.</td></tr><tr><td><code>safeEqual(a, b)</code></td><td>Constant-time string comparison, returns a bool.</td></tr><tr><td><code>passwordHash(password)</code></td><td>Salted PBKDF2-HMAC-SHA256 string.</td></tr><tr><td><code>passwordVerify(password, hash)</code></td><td>Constant-time check against a <code>passwordHash</code> value.</td></tr></tbody></table></div>
-<p>Password hashes look like <code>pbkdf2-sha256$&lt;iterations&gt;$&lt;salt_b64&gt;$&lt;hash_b64&gt;</code> (random 16-byte salt, 210,000 iterations, 32-byte key). The cost can be raised later without invalidating existing hashes.</p>
-</section>
-<section id="sessions" class="doc-section"><h2>Sessions</h2>
-<p>There is no hidden session store: generate the ID on the server, keep it in a global map, and carry it in an <code>HttpOnly</code> cookie. The cookie value alone is not trusted; look it up and check expiry on every request.</p>
-<div class="terminal"><div class="terminal-bar"><span>sessions.nac</span><span>NaC</span></div><pre><code>sessions = {}                            <span class="comment">// sid -&gt; { username, expires }</span>
+}</code></pre>
+					</div>
+					<p>Cookie defaults: <code>path: "/"</code>, <code>httpOnly: true</code>, <code>secure: false</code>, <code>sameSite: "Lax"</code>, and no <code>Max-Age</code>/<code>Expires</code>. <code>sameSite: "None"</code> automatically turns on <code>Secure</code>. <code>clearCookie</code> emits <code>Max-Age=0</code> and an <code>Expires</code> date in the past. Names must be HTTP tokens, values may not contain <code>;</code> or control characters, and both functions return <code>false</code> on invalid input. <code>expires</code> (an HTTP date string) and <code>domain</code> are also accepted.</p>
+				</section>
+				<section id="security-primitives" class="doc-section">
+					<h2>Security primitives</h2>
+					<p>Built in, no imports:</p>
+					<div class="table-wrap">
+						<table>
+							<thead>
+								<tr>
+									<th>Function</th>
+									<th>Result</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><code>randomBytes(n)</code></td>
+									<td><code>2*n</code> lowercase hex characters from a CSPRNG; <code>n</code> is 1..4095.</td>
+								</tr>
+								<tr>
+									<td><code>uuid()</code></td>
+									<td>Random (v4) UUID string.</td>
+								</tr>
+								<tr>
+									<td><code>sessionId()</code></td>
+									<td>32 random bytes as 43-character base64url text.</td>
+								</tr>
+								<tr>
+									<td><code>sha256(s)</code></td>
+									<td>SHA-256 of <code>s</code> as 64 lowercase hex characters.</td>
+								</tr>
+								<tr>
+									<td><code>hmac(key, message)</code></td>
+									<td>HMAC-SHA256 as 64 lowercase hex characters.</td>
+								</tr>
+								<tr>
+									<td><code>base64Encode(s)</code> / <code>base64Decode(s)</code></td>
+									<td>Standard base64 with <code>=</code> padding.</td>
+								</tr>
+								<tr>
+									<td><code>safeEqual(a, b)</code></td>
+									<td>Constant-time string comparison, returns a bool.</td>
+								</tr>
+								<tr>
+									<td><code>passwordHash(password)</code></td>
+									<td>Salted PBKDF2-HMAC-SHA256 string.</td>
+								</tr>
+								<tr>
+									<td><code>passwordVerify(password, hash)</code></td>
+									<td>Constant-time check against a <code>passwordHash</code> value.</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<p>Password hashes look like <code>pbkdf2-sha256$&lt;iterations&gt;$&lt;salt_b64&gt;$&lt;hash_b64&gt;</code> (random 16-byte salt, 210,000 iterations, 32-byte key). The cost can be raised later without invalidating existing hashes.</p>
+				</section>
+				<section id="sessions" class="doc-section">
+					<h2>Sessions</h2>
+					<p>There is no hidden session store: generate the ID on the server, keep it in a global map, and carry it in an <code>HttpOnly</code> cookie. The cookie value alone is not trusted; look it up and check expiry on every request.</p>
+					<div class="terminal">
+						<div class="terminal-bar"><span>sessions.nac</span><span>NaC</span></div>
+						<pre><code>sessions = {}                            <span class="comment">// sid -&gt; { username, expires }</span>
 SESSION_TTL = 86400
 
 <span class="keyword">route</span> POST <span class="string">"/login"</span> {
@@ -92,15 +181,51 @@ SESSION_TTL = 86400
         <span class="keyword">return</span> json({ error: <span class="string">"authentication required"</span> }, 401)
     }
     <span class="keyword">return</span> json({ username: s.username })
-}</code></pre></div>
-<p>See <code>examples/web/06_accounts.nac</code> for register/login/logout, protected routes, role checks and a JSON-file user store.</p>
-</section>
-<section id="server-hardening-always-on" class="doc-section"><h2>Server hardening (always on)</h2>
-<div class="table-wrap"><table><thead><tr><th>Limit</th><th>Default</th></tr></thead><tbody><tr><td>Request header block</td><td>16 KiB, else <code>431</code></td></tr><tr><td>Request body</td><td>8191 bytes, else <code>413</code></td></tr><tr><td>Whole-request read deadline</td><td>10 seconds, else <code>408</code></td></tr><tr><td>Requests per client IP</td><td>120 per 60-second fixed window, else <code>429</code> + <code>Retry-After</code></td></tr><tr><td>Concurrent connections</td><td>64</td></tr></tbody></table></div>
-<p>Every dynamic and static response also carries <code>X-Content-Type-Options: nosniff</code>, <code>X-Frame-Options: DENY</code> and <code>Referrer-Policy: no-referrer</code>. Response header names or values containing CR/LF are dropped, so a script-supplied value cannot inject extra headers.</p>
-<div class="callout"><strong>Behind a reverse proxy</strong>The rate limiter uses the socket address, not <code>X-Forwarded-For</code>, so behind a reverse proxy every request looks like it comes from the proxy.</div></section>
+}</code></pre>
+					</div>
+					<p>See <code>examples/web/06_accounts.nac</code> for register/login/logout, protected routes, role checks and a JSON-file user store.</p>
+				</section>
+				<section id="server-hardening-always-on" class="doc-section">
+					<h2>Server hardening (always on)</h2>
+					<div class="table-wrap">
+						<table>
+							<thead>
+								<tr>
+									<th>Limit</th>
+									<th>Default</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Request header block</td>
+									<td>16 KiB, else <code>431</code></td>
+								</tr>
+								<tr>
+									<td>Request body</td>
+									<td>8191 bytes, else <code>413</code></td>
+								</tr>
+								<tr>
+									<td>Whole-request read deadline</td>
+									<td>10 seconds, else <code>408</code></td>
+								</tr>
+								<tr>
+									<td>Requests per client IP</td>
+									<td>120 per 60-second fixed window, else <code>429</code> + <code>Retry-After</code></td>
+								</tr>
+								<tr>
+									<td>Concurrent connections</td>
+									<td>64</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<p>Every dynamic and static response also carries <code>X-Content-Type-Options: nosniff</code>, <code>X-Frame-Options: DENY</code> and <code>Referrer-Policy: no-referrer</code>. Response header names or values containing CR/LF are dropped, so a script-supplied value cannot inject extra headers.</p>
+					<div class="callout"><strong>Behind a reverse proxy</strong>The rate limiter uses the socket address, not <code>X-Forwarded-For</code>, so behind a reverse proxy every request looks like it comes from the proxy.</div>
+				</section>
 
-				<nav class="doc-pager" aria-label="Pages"><a class="pager-prev" href="server.html"><span>Previous</span>HTTP server</a><a class="pager-next" href="http-client.html"><span>Next</span>HTTP client and JSON</a></nav>
+				<nav class="doc-pager" aria-label="Pages">
+					<a class="pager-prev" href="server.html"><span>Previous</span>HTTP server</a><a class="pager-next" href="http-client.html"><span>Next</span>HTTP client and JSON</a>
+				</nav>
 			</main>
 		</div>
 

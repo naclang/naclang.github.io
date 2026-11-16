@@ -22,7 +22,22 @@
 					<a href="../index.html#security">Security</a>
 					<div class="nav-dropdown">
 						<button type="button" class="nav-dropbtn is-active" aria-haspopup="true" aria-expanded="false">Docs</button>
-						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="testing.html">Testing and dev mode</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="index.html">Overview</a></li>
+								<li><a href="install.html">Install</a></li>
+								<li><a href="basics.html">Language basics</a></li>
+								<li><a href="control-flow.html">Control flow and errors</a></li>
+								<li><a href="functions.html">Functions</a></li>
+								<li><a href="collections.html">Arrays and maps</a></li>
+								<li><a href="io.html">I/O, files and builtins</a></li>
+								<li><a href="server.html">HTTP server</a></li>
+								<li><a href="security.html">Cookies, sessions and security</a></li>
+								<li><a href="http-client.html">HTTP client and JSON</a></li>
+								<li><a href="testing.html">Testing and dev mode</a></li>
+								<li><a href="legacy.html">Removed syntax</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</nav>
@@ -33,7 +48,28 @@
 				<button type="button" class="toc-toggle" aria-expanded="false" aria-controls="toc-panel"><span class="toc-toggle-label">Docs</span><span class="toc-toggle-current">HTTP server</span></button>
 				<p class="sidebar-title">Documentation</p>
 				<div class="toc-panel" id="toc-panel">
-					<ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html" class="is-page" aria-current="page">HTTP server</a><ul class="toc-sub"><li><a href="#responses">Responses</a></li><li><a href="#request-helpers">Request helpers</a></li><li><a href="#templates">Templates</a></li><li><a href="#configuration">Configuration</a></li></ul></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="testing.html">Testing and dev mode</a></li><li><a href="legacy.html">Removed syntax</a></li></ul>
+					<ul>
+						<li><a href="index.html">Overview</a></li>
+						<li><a href="install.html">Install</a></li>
+						<li><a href="basics.html">Language basics</a></li>
+						<li><a href="control-flow.html">Control flow and errors</a></li>
+						<li><a href="functions.html">Functions</a></li>
+						<li><a href="collections.html">Arrays and maps</a></li>
+						<li><a href="io.html">I/O, files and builtins</a></li>
+						<li>
+							<a href="server.html" class="is-page" aria-current="page">HTTP server</a>
+							<ul class="toc-sub">
+								<li><a href="#responses">Responses</a></li>
+								<li><a href="#request-helpers">Request helpers</a></li>
+								<li><a href="#templates">Templates</a></li>
+								<li><a href="#configuration">Configuration</a></li>
+							</ul>
+						</li>
+						<li><a href="security.html">Cookies, sessions and security</a></li>
+						<li><a href="http-client.html">HTTP client and JSON</a></li>
+						<li><a href="testing.html">Testing and dev mode</a></li>
+						<li><a href="legacy.html">Removed syntax</a></li>
+					</ul>
 				</div>
 			</aside>
 
@@ -41,10 +77,12 @@
 				<header class="page-head">
 					<p class="kicker">Docs</p>
 					<h1>HTTP server.</h1>
-					
 				</header>
 
-<section class="doc-section"><div class="terminal"><div class="terminal-bar"><span>server.nac</span><span>NaC</span></div><pre><code>static(<span class="string">"public"</span>)                       <span class="comment">// "/" -&gt; public/index.html, /app.css -&gt; public/app.css</span>
+				<section class="doc-section">
+					<div class="terminal">
+						<div class="terminal-bar"><span>server.nac</span><span>NaC</span></div>
+						<pre><code>static(<span class="string">"public"</span>)                       <span class="comment">// "/" -&gt; public/index.html, /app.css -&gt; public/app.css</span>
 static(<span class="string">"/assets"</span>, <span class="string">"public/assets"</span>)     <span class="comment">// mount a directory under a URL prefix</span>
 
 <span class="keyword">route</span> GET <span class="string">"/hello/:name"</span> {
@@ -56,22 +94,56 @@ static(<span class="string">"/assets"</span>, <span class="string">"public/asset
     <span class="keyword">return</span> json(data, 201)
 }
 
-serve(8080)                            <span class="comment">// blocking</span></code></pre></div>
-<p><code>route METHOD "pattern" { ... }</code>: <code>METHOD</code> is <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code>, ... or <code>*</code> for any. Inside the body you have <code>method</code>, <code>path</code>, <code>query</code>, <code>headers</code>, <code>body</code>, <code>params</code> and <code>cookie</code> (see <a href="security.html">cookies</a>).</p>
-<ul class="plain-list"><li><code>:name</code> captures a path segment into <code>params.name</code> (URL-decoded); a trailing <code>*</code> captures the rest into <code>params["*"]</code>. Routes are tried in declaration order.</li><li>At most 128 routes.</li></ul>
-<p><code>static(dir)</code> / <code>static(prefix, dir)</code> serves GET/HEAD from a directory; directory URLs serve <code>index.html</code>; the MIME type comes from the extension; <code>..</code> is rejected. Files can be up to 32 MB; up to 8 mounts.</p>
-<p>Resolution order: routes, then static mounts, then <code>405</code> (the path matches a route for another method) or <code>404</code>.</p>
-</section>
-<section id="responses" class="doc-section"><h2>Responses</h2>
-<p>A route returns a string (200; <code>text/html</code> if it starts with <code>&lt;</code>, else <code>text/plain</code>), a map with <code>status</code>, <code>body</code> and <code>headers</code>, or one of:</p>
-<div class="terminal"><div class="terminal-bar"><span>responses.nac</span><span>NaC</span></div><pre><code>html(body)        html(body, status)
+serve(8080)                            <span class="comment">// blocking</span></code></pre>
+					</div>
+					<p><code>route METHOD "pattern" { ... }</code>: <code>METHOD</code> is <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code>, ... or <code>*</code> for any. Inside the body you have <code>method</code>, <code>path</code>, <code>query</code>, <code>headers</code>, <code>body</code>, <code>params</code> and <code>cookie</code> (see <a href="security.html">cookies</a>).</p>
+					<ul class="plain-list">
+						<li><code>:name</code> captures a path segment into <code>params.name</code> (URL-decoded); a trailing <code>*</code> captures the rest into <code>params["*"]</code>. Routes are tried in declaration order.</li>
+						<li>At most 128 routes.</li>
+					</ul>
+					<p><code>static(dir)</code> / <code>static(prefix, dir)</code> serves GET/HEAD from a directory; directory URLs serve <code>index.html</code>; the MIME type comes from the extension; <code>..</code> is rejected. Files can be up to 32 MB; up to 8 mounts.</p>
+					<p>Resolution order: routes, then static mounts, then <code>405</code> (the path matches a route for another method) or <code>404</code>.</p>
+				</section>
+				<section id="responses" class="doc-section">
+					<h2>Responses</h2>
+					<p>A route returns a string (200; <code>text/html</code> if it starts with <code>&lt;</code>, else <code>text/plain</code>), a map with <code>status</code>, <code>body</code> and <code>headers</code>, or one of:</p>
+					<div class="terminal">
+						<div class="terminal-bar"><span>responses.nac</span><span>NaC</span></div>
+						<pre><code>html(body)        html(body, status)
 json(value)       json(value, status)       <span class="comment">// application/json</span>
-redirect(url)     redirect(url, status)     <span class="comment">// 302 by default</span></code></pre></div>
-<p>Dynamic bodies and header values are limited to 8192 characters. Handlers run one at a time, so a slow route delays the others.</p>
-</section>
-<section id="request-helpers" class="doc-section"><h2>Request helpers</h2>
-<div class="table-wrap"><table><thead><tr><th>Function</th><th>Result</th></tr></thead><tbody><tr><td><code>form(body)</code></td><td>Parses an <code>application/x-www-form-urlencoded</code> request body into a map.</td></tr><tr><td><code>header(name, value)</code></td><td>A map holding that one response header.</td></tr><tr><td><code>cors(origin, methods, headers)</code></td><td>A map of CORS response headers for the origin, the allowed methods and the allowed request headers.</td></tr></tbody></table></div>
-<div class="terminal"><div class="terminal-bar"><span>request-helpers.nac</span><span>NaC</span></div><pre><code>ORIGIN = <span class="string">"http://localhost:3000"</span>
+redirect(url)     redirect(url, status)     <span class="comment">// 302 by default</span></code></pre>
+					</div>
+					<p>Dynamic bodies and header values are limited to 8192 characters. Handlers run one at a time, so a slow route delays the others.</p>
+				</section>
+				<section id="request-helpers" class="doc-section">
+					<h2>Request helpers</h2>
+					<div class="table-wrap">
+						<table>
+							<thead>
+								<tr>
+									<th>Function</th>
+									<th>Result</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><code>form(body)</code></td>
+									<td>Parses an <code>application/x-www-form-urlencoded</code> request body into a map.</td>
+								</tr>
+								<tr>
+									<td><code>header(name, value)</code></td>
+									<td>A map holding that one response header.</td>
+								</tr>
+								<tr>
+									<td><code>cors(origin, methods, headers)</code></td>
+									<td>A map of CORS response headers for the origin, the allowed methods and the allowed request headers.</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="terminal">
+						<div class="terminal-bar"><span>request-helpers.nac</span><span>NaC</span></div>
+						<pre><code>ORIGIN = <span class="string">"http://localhost:3000"</span>
 
 <span class="keyword">route</span> OPTIONS <span class="string">"/api/greet"</span> {                      <span class="comment">// CORS preflight</span>
     <span class="keyword">return</span> {
@@ -97,11 +169,15 @@ redirect(url)     redirect(url, status)     <span class="comment">// 302 by defa
         body: jsonStringify({ message: <span class="string">"Hello, "</span> + data.name }),
         headers: headers
     }
-}</code></pre></div>
-</section>
-<section id="templates" class="doc-section"><h2>Templates</h2>
-<p><code>render(path, values)</code> fills the <code>{{ name }}</code> placeholders of an HTML file. Values are HTML-escaped, so user input cannot inject markup. It returns an HTML response, so a route can return it directly. In the examples the path is relative to the project root, where the server is started.</p>
-<div class="terminal"><div class="terminal-bar"><span>templates.nac</span><span>NaC</span></div><pre><code><span class="comment">// examples/web/templates/greeting.html</span>
+}</code></pre>
+					</div>
+				</section>
+				<section id="templates" class="doc-section">
+					<h2>Templates</h2>
+					<p><code>render(path, values)</code> fills the <code>{{ name }}</code> placeholders of an HTML file. Values are HTML-escaped, so user input cannot inject markup. It returns an HTML response, so a route can return it directly. In the examples the path is relative to the project root, where the server is started.</p>
+					<div class="terminal">
+						<div class="terminal-bar"><span>templates.nac</span><span>NaC</span></div>
+						<pre><code><span class="comment">// examples/web/templates/greeting.html</span>
 <span class="comment">//   &lt;h1&gt;Hello, {{ name }}!&lt;/h1&gt;</span>
 
 <span class="keyword">route</span> GET <span class="string">"/hello/:name"</span> {
@@ -109,19 +185,34 @@ redirect(url)     redirect(url, status)     <span class="comment">// 302 by defa
         title: params.name,
         name: params.name
     })
-}</code></pre></div>
-</section>
-<section id="configuration" class="doc-section"><h2>Configuration</h2>
-<p>At startup NaC loads a <code>.env</code> file from the working directory if there is one. Variables that are already set in the process environment take precedence over the file.</p>
-<ul class="plain-list"><li><code>env("PORT", "8080")</code> returns the default only when <code>PORT</code> is not set.</li><li><code>serve()</code> without a port uses <code>PORT</code> and falls back to 8080.</li><li>An explicit <code>serve(port)</code> overrides the configured value.</li></ul>
-<div class="terminal"><div class="terminal-bar"><span>.env</span><span>dotenv</span></div><pre><code>PORT=8081</code></pre></div>
-<div class="terminal"><div class="terminal-bar"><span>config.nac</span><span>NaC</span></div><pre><code><span class="keyword">route</span> GET <span class="string">"/"</span> {
+}</code></pre>
+					</div>
+				</section>
+				<section id="configuration" class="doc-section">
+					<h2>Configuration</h2>
+					<p>At startup NaC loads a <code>.env</code> file from the working directory if there is one. Variables that are already set in the process environment take precedence over the file.</p>
+					<ul class="plain-list">
+						<li><code>env("PORT", "8080")</code> returns the default only when <code>PORT</code> is not set.</li>
+						<li><code>serve()</code> without a port uses <code>PORT</code> and falls back to 8080.</li>
+						<li>An explicit <code>serve(port)</code> overrides the configured value.</li>
+					</ul>
+					<div class="terminal">
+						<div class="terminal-bar"><span>.env</span><span>dotenv</span></div>
+						<pre><code>PORT=8081</code></pre>
+					</div>
+					<div class="terminal">
+						<div class="terminal-bar"><span>config.nac</span><span>NaC</span></div>
+						<pre><code><span class="keyword">route</span> GET <span class="string">"/"</span> {
     <span class="keyword">return</span> json({ message: <span class="string">"Configuration loaded"</span>, port: env(<span class="string">"PORT"</span>, <span class="string">"8080"</span>) })
 }
 
-serve()      <span class="comment">// PORT from .env or the environment, else 8080</span></code></pre></div></section>
+serve()      <span class="comment">// PORT from .env or the environment, else 8080</span></code></pre>
+					</div>
+				</section>
 
-				<nav class="doc-pager" aria-label="Pages"><a class="pager-prev" href="io.html"><span>Previous</span>I/O, files and builtins</a><a class="pager-next" href="security.html"><span>Next</span>Cookies, sessions and security</a></nav>
+				<nav class="doc-pager" aria-label="Pages">
+					<a class="pager-prev" href="io.html"><span>Previous</span>I/O, files and builtins</a><a class="pager-next" href="security.html"><span>Next</span>Cookies, sessions and security</a>
+				</nav>
 			</main>
 		</div>
 

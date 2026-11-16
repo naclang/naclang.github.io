@@ -22,7 +22,22 @@
 					<a href="../index.html#security">Security</a>
 					<div class="nav-dropdown">
 						<button type="button" class="nav-dropbtn is-active" aria-haspopup="true" aria-expanded="false">Docs</button>
-						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="testing.html">Testing and dev mode</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="index.html">Overview</a></li>
+								<li><a href="install.html">Install</a></li>
+								<li><a href="basics.html">Language basics</a></li>
+								<li><a href="control-flow.html">Control flow and errors</a></li>
+								<li><a href="functions.html">Functions</a></li>
+								<li><a href="collections.html">Arrays and maps</a></li>
+								<li><a href="io.html">I/O, files and builtins</a></li>
+								<li><a href="server.html">HTTP server</a></li>
+								<li><a href="security.html">Cookies, sessions and security</a></li>
+								<li><a href="http-client.html">HTTP client and JSON</a></li>
+								<li><a href="testing.html">Testing and dev mode</a></li>
+								<li><a href="legacy.html">Removed syntax</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</nav>
@@ -33,7 +48,27 @@
 				<button type="button" class="toc-toggle" aria-expanded="false" aria-controls="toc-panel"><span class="toc-toggle-label">Docs</span><span class="toc-toggle-current">Testing and dev mode</span></button>
 				<p class="sidebar-title">Documentation</p>
 				<div class="toc-panel" id="toc-panel">
-					<ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="testing.html" class="is-page" aria-current="page">Testing and dev mode</a><ul class="toc-sub"><li><a href="#assert">assert</a></li><li><a href="#in-process-requests">In-process requests</a></li><li><a href="#commands">Commands</a></li></ul></li><li><a href="legacy.html">Removed syntax</a></li></ul>
+					<ul>
+						<li><a href="index.html">Overview</a></li>
+						<li><a href="install.html">Install</a></li>
+						<li><a href="basics.html">Language basics</a></li>
+						<li><a href="control-flow.html">Control flow and errors</a></li>
+						<li><a href="functions.html">Functions</a></li>
+						<li><a href="collections.html">Arrays and maps</a></li>
+						<li><a href="io.html">I/O, files and builtins</a></li>
+						<li><a href="server.html">HTTP server</a></li>
+						<li><a href="security.html">Cookies, sessions and security</a></li>
+						<li><a href="http-client.html">HTTP client and JSON</a></li>
+						<li>
+							<a href="testing.html" class="is-page" aria-current="page">Testing and dev mode</a>
+							<ul class="toc-sub">
+								<li><a href="#assert">assert</a></li>
+								<li><a href="#in-process-requests">In-process requests</a></li>
+								<li><a href="#commands">Commands</a></li>
+							</ul>
+						</li>
+						<li><a href="legacy.html">Removed syntax</a></li>
+					</ul>
 				</div>
 			</aside>
 
@@ -41,17 +76,19 @@
 				<header class="page-head">
 					<p class="kicker">Docs</p>
 					<h1>Testing and dev mode.</h1>
-					
 				</header>
 
-<section class="doc-section"><p>Tests are ordinary NaC scripts: declare routes, call them in-process and check the results.</p>
-</section>
-<section id="assert" class="doc-section"><h2>assert</h2>
-<p><code>assert(condition, [message])</code> reports an error with the message (default <code>Assertion failed</code>) when the condition is false, and returns <code>true</code> otherwise.</p>
-</section>
-<section id="in-process-requests" class="doc-section"><h2>In-process requests</h2>
-<p><code>request(method, path, [body, headers])</code> calls a route declared earlier in the script without opening a network port. The result is a map with <code>status</code> and <code>body</code>. Query strings are decoded, and header names are normalized, so read them in lowercase.</p>
-<div class="terminal"><div class="terminal-bar"><span>request_test.nac</span><span>NaC</span></div><pre><code><span class="keyword">route</span> GET <span class="string">"/hello/:name"</span> {
+				<section class="doc-section"><p>Tests are ordinary NaC scripts: declare routes, call them in-process and check the results.</p></section>
+				<section id="assert" class="doc-section">
+					<h2>assert</h2>
+					<p><code>assert(condition, [message])</code> reports an error with the message (default <code>Assertion failed</code>) when the condition is false, and returns <code>true</code> otherwise.</p>
+				</section>
+				<section id="in-process-requests" class="doc-section">
+					<h2>In-process requests</h2>
+					<p><code>request(method, path, [body, headers])</code> calls a route declared earlier in the script without opening a network port. The result is a map with <code>status</code> and <code>body</code>. Query strings are decoded, and header names are normalized, so read them in lowercase.</p>
+					<div class="terminal">
+						<div class="terminal-bar"><span>request_test.nac</span><span>NaC</span></div>
+						<pre><code><span class="keyword">route</span> GET <span class="string">"/hello/:name"</span> {
     <span class="keyword">return</span> json({ message: <span class="string">"Hello, "</span> + params.name })
 }
 
@@ -65,14 +102,22 @@ data = jsonParse(response.body)
 assert(data.message == <span class="string">"Hello, Ada"</span>, <span class="string">"path parameter should reach route"</span>)
 
 post = request(<span class="string">"POST"</span>, <span class="string">"/echo"</span>, <span class="string">"payload"</span>, { <span class="string">"content-type"</span>: <span class="string">"text/plain"</span> })
-assert(jsonParse(post.body).contentType == <span class="string">"text/plain"</span>, <span class="string">"request header should reach route"</span>)</code></pre></div>
-</section>
-<section id="commands" class="doc-section"><h2>Commands</h2>
-<div class="terminal"><div class="terminal-bar"><span>terminal</span><span>bash</span></div><pre><code>./nac test examples/lang/request_test.nac    <span class="comment"># run a test script</span>
-./nac dev app.nac                            <span class="comment"># restart when the script or .env changes</span></code></pre></div>
-<p><code>nac test</code> also checks configuration defaults: <code>examples/lang/config_test.nac</code> asserts that <code>env()</code> returns its default when a variable is missing.</p></section>
+assert(jsonParse(post.body).contentType == <span class="string">"text/plain"</span>, <span class="string">"request header should reach route"</span>)</code></pre>
+					</div>
+				</section>
+				<section id="commands" class="doc-section">
+					<h2>Commands</h2>
+					<div class="terminal">
+						<div class="terminal-bar"><span>terminal</span><span>bash</span></div>
+						<pre><code>./nac test examples/lang/request_test.nac    <span class="comment"># run a test script</span>
+./nac dev app.nac                            <span class="comment"># restart when the script or .env changes</span></code></pre>
+					</div>
+					<p><code>nac test</code> also checks configuration defaults: <code>examples/lang/config_test.nac</code> asserts that <code>env()</code> returns its default when a variable is missing.</p>
+				</section>
 
-				<nav class="doc-pager" aria-label="Pages"><a class="pager-prev" href="http-client.html"><span>Previous</span>HTTP client and JSON</a><a class="pager-next" href="legacy.html"><span>Next</span>Removed syntax</a></nav>
+				<nav class="doc-pager" aria-label="Pages">
+					<a class="pager-prev" href="http-client.html"><span>Previous</span>HTTP client and JSON</a><a class="pager-next" href="legacy.html"><span>Next</span>Removed syntax</a>
+				</nav>
 			</main>
 		</div>
 

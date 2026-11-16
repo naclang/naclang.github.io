@@ -22,7 +22,22 @@
 					<a href="#security">Security</a>
 					<div class="nav-dropdown">
 						<button type="button" class="nav-dropbtn" aria-haspopup="true" aria-expanded="false">Docs</button>
-						<div class="dropdown-menu"><ul><li><a href="docs/index.html">Overview</a></li><li><a href="docs/install.html">Install</a></li><li><a href="docs/basics.html">Language basics</a></li><li><a href="docs/control-flow.html">Control flow and errors</a></li><li><a href="docs/functions.html">Functions</a></li><li><a href="docs/collections.html">Arrays and maps</a></li><li><a href="docs/io.html">I/O, files and builtins</a></li><li><a href="docs/server.html">HTTP server</a></li><li><a href="docs/security.html">Cookies, sessions and security</a></li><li><a href="docs/http-client.html">HTTP client and JSON</a></li><li><a href="docs/testing.html">Testing and dev mode</a></li><li><a href="docs/legacy.html">Removed syntax</a></li></ul></div>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="docs/index.html">Overview</a></li>
+								<li><a href="docs/install.html">Install</a></li>
+								<li><a href="docs/basics.html">Language basics</a></li>
+								<li><a href="docs/control-flow.html">Control flow and errors</a></li>
+								<li><a href="docs/functions.html">Functions</a></li>
+								<li><a href="docs/collections.html">Arrays and maps</a></li>
+								<li><a href="docs/io.html">I/O, files and builtins</a></li>
+								<li><a href="docs/server.html">HTTP server</a></li>
+								<li><a href="docs/security.html">Cookies, sessions and security</a></li>
+								<li><a href="docs/http-client.html">HTTP client and JSON</a></li>
+								<li><a href="docs/testing.html">Testing and dev mode</a></li>
+								<li><a href="docs/legacy.html">Removed syntax</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</nav>
@@ -189,30 +204,6 @@
 						</div>
 					</div>
 				</div>
-			</section>
-
-			<section id="development" class="section">
-				<div class="section-head">
-					<p class="kicker">04 / Development</p>
-					<h2>1.2 groundwork is in progress.</h2>
-					<p class="lead">Recent implementation work started on roadmap item 1.2 (heap-backed strings, smaller <code>Value</code>, and removing the 8192-character body limitation). The user-visible limits below are not fully lifted yet; the core runtime is being refactored first.</p>
-				</div>
-
-				<div class="feature-grid">
-					<article class="feature">
-						<h3>Heap-backed runtime values</h3>
-						<p><code>Value</code> strings, arrays and maps now use heap-backed storage with ownership tracking in the runtime, replacing the old fixed inline string buffer layout.</p>
-					</article>
-					<article class="feature">
-						<h3>Dynamic parsing and JSON strings</h3>
-						<p>Lexer, parser and JSON string/key parsing were updated to allocate dynamically instead of relying on fixed string buffers for scanned/parsed content.</p>
-					</article>
-					<article class="feature">
-						<h3>Config groundwork</h3>
-						<p>Server configuration plumbing added for <code>--max-body-bytes</code> / <code>NAC_MAX_BODY_BYTES</code> (default 1 MiB, ceiling 64 MiB) as part of the upcoming request-body limit work.</p>
-					</article>
-				</div>
-				<p class="lead">Still in progress: dynamic HTTP request/response buffers and full body-limit removal on the server path, builtin/string API conversions for large strings, and documentation/limit updates once behavior is complete.</p>
 			</section>
 
 			<section id="start" class="section quickstart">

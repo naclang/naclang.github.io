@@ -466,9 +466,6 @@ pre code {
 	font-size: 0.8em;
 }
 
-
-
-
 .sidebar-title {
 	padding: 0.55rem 1rem 0.3rem;
 	font-family: var(--mono);
@@ -477,13 +474,6 @@ pre code {
 	text-transform: uppercase;
 	color: var(--code-muted);
 }
-
-
-
-
-
-
-
 
 .note {
 	margin-top: 1rem;
@@ -943,12 +933,6 @@ td code {
 	.feature-grid {
 		grid-template-columns: 1fr;
 	}
-
-
-
-
-
-
 
 	.stat-row {
 		grid-template-columns: 1fr;
@@ -1604,7 +1588,6 @@ td code {
 		font-size: 0.78rem;
 	}
 }
-
 
 /* Tighter rhythm on docs pages */
 .docs-content .page-head + .doc-section {

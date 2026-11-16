@@ -22,7 +22,22 @@
 					<a href="../index.html#security">Security</a>
 					<div class="nav-dropdown">
 						<button type="button" class="nav-dropbtn is-active" aria-haspopup="true" aria-expanded="false">Docs</button>
-						<div class="dropdown-menu"><ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html">Control flow and errors</a></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="testing.html">Testing and dev mode</a></li><li><a href="legacy.html">Removed syntax</a></li></ul></div>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="index.html">Overview</a></li>
+								<li><a href="install.html">Install</a></li>
+								<li><a href="basics.html">Language basics</a></li>
+								<li><a href="control-flow.html">Control flow and errors</a></li>
+								<li><a href="functions.html">Functions</a></li>
+								<li><a href="collections.html">Arrays and maps</a></li>
+								<li><a href="io.html">I/O, files and builtins</a></li>
+								<li><a href="server.html">HTTP server</a></li>
+								<li><a href="security.html">Cookies, sessions and security</a></li>
+								<li><a href="http-client.html">HTTP client and JSON</a></li>
+								<li><a href="testing.html">Testing and dev mode</a></li>
+								<li><a href="legacy.html">Removed syntax</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</nav>
@@ -33,7 +48,27 @@
 				<button type="button" class="toc-toggle" aria-expanded="false" aria-controls="toc-panel"><span class="toc-toggle-label">Docs</span><span class="toc-toggle-current">Control flow and errors</span></button>
 				<p class="sidebar-title">Documentation</p>
 				<div class="toc-panel" id="toc-panel">
-					<ul><li><a href="index.html">Overview</a></li><li><a href="install.html">Install</a></li><li><a href="basics.html">Language basics</a></li><li><a href="control-flow.html" class="is-page" aria-current="page">Control flow and errors</a><ul class="toc-sub"><li><a href="#s6">if / elif / else</a></li><li><a href="#s7">Loops</a></li><li><a href="#s7a">Errors: try / catch / throw</a></li></ul></li><li><a href="functions.html">Functions</a></li><li><a href="collections.html">Arrays and maps</a></li><li><a href="io.html">I/O, files and builtins</a></li><li><a href="server.html">HTTP server</a></li><li><a href="security.html">Cookies, sessions and security</a></li><li><a href="http-client.html">HTTP client and JSON</a></li><li><a href="testing.html">Testing and dev mode</a></li><li><a href="legacy.html">Removed syntax</a></li></ul>
+					<ul>
+						<li><a href="index.html">Overview</a></li>
+						<li><a href="install.html">Install</a></li>
+						<li><a href="basics.html">Language basics</a></li>
+						<li>
+							<a href="control-flow.html" class="is-page" aria-current="page">Control flow and errors</a>
+							<ul class="toc-sub">
+								<li><a href="#s6">if / elif / else</a></li>
+								<li><a href="#s7">Loops</a></li>
+								<li><a href="#s7a">Errors: try / catch / throw</a></li>
+							</ul>
+						</li>
+						<li><a href="functions.html">Functions</a></li>
+						<li><a href="collections.html">Arrays and maps</a></li>
+						<li><a href="io.html">I/O, files and builtins</a></li>
+						<li><a href="server.html">HTTP server</a></li>
+						<li><a href="security.html">Cookies, sessions and security</a></li>
+						<li><a href="http-client.html">HTTP client and JSON</a></li>
+						<li><a href="testing.html">Testing and dev mode</a></li>
+						<li><a href="legacy.html">Removed syntax</a></li>
+					</ul>
 				</div>
 			</aside>
 
@@ -41,19 +76,28 @@
 				<header class="page-head">
 					<p class="kicker">Docs</p>
 					<h1>Control flow and errors.</h1>
-					
 				</header>
 
-<section id="s6" class="doc-section"><h2>if / elif / else</h2><p>Parentheses around the condition are optional:</p>
-<div class="terminal"><div class="terminal-bar"><span>if.nac</span><span>NaC</span></div><pre><code><span class="keyword">if</span> x &lt; 0 {
+				<section id="s6" class="doc-section">
+					<h2>if / elif / else</h2>
+					<p>Parentheses around the condition are optional:</p>
+					<div class="terminal">
+						<div class="terminal-bar"><span>if.nac</span><span>NaC</span></div>
+						<pre><code><span class="keyword">if</span> x &lt; 0 {
     <span class="keyword">print</span>(<span class="string">"negative"</span>)
 } <span class="keyword">elif</span> x == 0 {
     <span class="keyword">print</span>(<span class="string">"zero"</span>)
 } <span class="keyword">else</span> {
     <span class="keyword">print</span>(<span class="string">"positive"</span>)
-}</code></pre></div>
-<p><code>else if</code> works too.</p></section>
-<section id="s7" class="doc-section"><h2>Loops</h2><div class="terminal"><div class="terminal-bar"><span>loops.nac</span><span>NaC</span></div><pre><code><span class="keyword">for</span> item <span class="keyword">in</span> [10, 20, 30] { <span class="keyword">print</span>(item) }    <span class="comment">// arrays</span>
+}</code></pre>
+					</div>
+					<p><code>else if</code> works too.</p>
+				</section>
+				<section id="s7" class="doc-section">
+					<h2>Loops</h2>
+					<div class="terminal">
+						<div class="terminal-bar"><span>loops.nac</span><span>NaC</span></div>
+						<pre><code><span class="keyword">for</span> item <span class="keyword">in</span> [10, 20, 30] { <span class="keyword">print</span>(item) }    <span class="comment">// arrays</span>
 <span class="keyword">for</span> key <span class="keyword">in</span> person { <span class="keyword">print</span>(key) }            <span class="comment">// maps iterate their keys</span>
 <span class="keyword">for</span> ch <span class="keyword">in</span> <span class="string">"abc"</span> { <span class="keyword">print</span>(ch) }               <span class="comment">// string characters</span>
 <span class="keyword">for</span> i <span class="keyword">in</span> range(5) { }                       <span class="comment">// 0..4  (range(a, b) -&gt; a..b-1)</span>
@@ -61,16 +105,32 @@
 <span class="keyword">while</span> x &gt; 0 { x-- }
 
 <span class="keyword">break</span>
-<span class="keyword">continue</span></code></pre></div></section>
-<section id="s7a" class="doc-section"><h2>Errors: try / catch / throw</h2><div class="terminal"><div class="terminal-bar"><span>errors.nac</span><span>NaC</span></div><pre><code><span class="keyword">try</span> {
+<span class="keyword">continue</span></code></pre>
+					</div>
+				</section>
+				<section id="s7a" class="doc-section">
+					<h2>Errors: try / catch / throw</h2>
+					<div class="terminal">
+						<div class="terminal-bar"><span>errors.nac</span><span>NaC</span></div>
+						<pre><code><span class="keyword">try</span> {
     data = jsonParse(text)          <span class="comment">// any runtime error inside the block ...</span>
     <span class="keyword">print</span>(data.name)
 } <span class="keyword">catch</span> e {                         <span class="comment">// ... jumps here; `e` is the message (a string)</span>
     <span class="keyword">print</span>(<span class="string">"bad input:"</span>, e)
-}</code></pre></div>
-<ul class="plain-list"><li><code>catch e</code>, <code>catch (e)</code> and a bare <code>catch { }</code> are all accepted.</li><li>Catches runtime errors such as invalid JSON, division by zero, bad indexes, undefined names, wrong argument counts and bad <code>http.&lt;method&gt;</code> options. Syntax errors are never caught.</li><li>After an error the rest of the <code>try</code> block is skipped, including in loops and in functions called from the block. <code>try</code> blocks can be nested and work with <code>return</code>, <code>break</code> and <code>continue</code>.</li><li><code>throw value</code> raises your own error; <code>e</code> receives the value rendered as text. A <code>throw</code> outside any <code>try</code> stops the program with <code>Uncaught: ...</code>.</li><li>A failed HTTP request is not an error: it comes back as <code>res.ok == false</code> with <code>res.error</code> set (see <a href="http-client.html">HTTP client</a>).</li></ul></section>
+}</code></pre>
+					</div>
+					<ul class="plain-list">
+						<li><code>catch e</code>, <code>catch (e)</code> and a bare <code>catch { }</code> are all accepted.</li>
+						<li>Catches runtime errors such as invalid JSON, division by zero, bad indexes, undefined names, wrong argument counts and bad <code>http.&lt;method&gt;</code> options. Syntax errors are never caught.</li>
+						<li>After an error the rest of the <code>try</code> block is skipped, including in loops and in functions called from the block. <code>try</code> blocks can be nested and work with <code>return</code>, <code>break</code> and <code>continue</code>.</li>
+						<li><code>throw value</code> raises your own error; <code>e</code> receives the value rendered as text. A <code>throw</code> outside any <code>try</code> stops the program with <code>Uncaught: ...</code>.</li>
+						<li>A failed HTTP request is not an error: it comes back as <code>res.ok == false</code> with <code>res.error</code> set (see <a href="http-client.html">HTTP client</a>).</li>
+					</ul>
+				</section>
 
-				<nav class="doc-pager" aria-label="Pages"><a class="pager-prev" href="basics.html"><span>Previous</span>Language basics</a><a class="pager-next" href="functions.html"><span>Next</span>Functions</a></nav>
+				<nav class="doc-pager" aria-label="Pages">
+					<a class="pager-prev" href="basics.html"><span>Previous</span>Language basics</a><a class="pager-next" href="functions.html"><span>Next</span>Functions</a>
+				</nav>
 			</main>
 		</div>
 
