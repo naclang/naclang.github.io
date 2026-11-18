@@ -80,7 +80,7 @@
 <span class="keyword">print</span>(add(3, 4))</code></pre>
 					</div>
 					<ul class="plain-list">
-						<li>Up to 256 functions (routes count) and 10 parameters; call depth 100.</li>
+						<li>Up to 256 function slots (routes and middleware count), 10 parameters per function and a call depth of 100.</li>
 						<li>A bare <code>return</code> returns <code>null</code>. Recursion works.</li>
 						<li>Functions are values: <code>fn(params) { ... }</code> (no name) is an expression, and the bare name of a declared function evaluates to that function. Store them in variables or maps, or pass them as callbacks.</li>
 					</ul>
@@ -96,7 +96,7 @@ op = double                           <span class="comment">// no parentheses: t
 					<ul class="plain-list">
 						<li>Calling through a function value is lenient like JavaScript when a callback is invoked by the runtime: missing arguments become <code>null</code>, extra ones are dropped. Direct calls <code>f(x)</code> still check the argument count.</li>
 						<li>Functions have no closures: a function body sees its own parameters/locals and globals, not the locals of the function that created it.</li>
-						<li>Named <code>fn name() { }</code> declarations still can’t be nested.</li>
+						<li>Named <code>fn name() { }</code> declarations may be nested, but they still have no closures: an inner function cannot read the outer function’s locals.</li>
 					</ul>
 				</section>
 

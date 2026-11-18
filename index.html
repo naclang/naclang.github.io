@@ -94,7 +94,7 @@
 				<div class="feature-grid">
 					<article class="feature">
 						<h3>Web-first syntax</h3>
-						<p><code>route</code>, <code>static</code> and <code>serve</code> are keywords. Path parameters, query strings, headers, bodies and cookies arrive as maps.</p>
+						<p><code>route</code> is a keyword; <code>static()</code> and <code>serve()</code> are built-in functions. Path parameters, query strings, headers, bodies and cookies arrive as maps.</p>
 					</article>
 					<article class="feature">
 						<h3>JSON in, JSON out</h3>
@@ -123,7 +123,7 @@
 				<div class="section-head">
 					<p class="kicker">02 / Examples</p>
 					<h2>Complete servers, not fragments.</h2>
-					<p class="lead">Every file under <code>examples/web</code> is a runnable server. Start one from the project root and follow the <code>curl</code> commands at the top of the file.</p>
+					<p class="lead">All files under <code>examples/web</code> except <code>05_http_client.nac</code> start a server; that one is a standalone HTTP-client script. Start a server from the project root and follow the <code>curl</code> commands at the top of the file.</p>
 					<div class="actions">
 						<a href="https://github.com/naclang/nac/tree/main/examples" class="btn btn-primary">Browse examples on GitHub</a>
 					</div>
@@ -153,7 +153,7 @@
 								<li>Response header names or values containing CR/LF are dropped, preventing header injection.</li>
 							</ul>
 						</div>
-						<a href="https://github.com/naclang/nac/blob/main/docs/SYNTAX.md#13a-cookies-sessions-and-security" class="btn btn-light">Security and sessions</a>
+						<a href="docs/security.html#sessions" class="btn btn-light">Security and sessions</a>
 					</div>
 
 					<div class="terminal">
@@ -187,7 +187,7 @@
 					</div>
 					<div class="stat-row">
 						<div class="stat">
-							<span class="stat-value">8191 B</span>
+							<span class="stat-value">1 MiB</span>
 							<span class="stat-label">request body, then 413</span>
 						</div>
 						<div class="stat">

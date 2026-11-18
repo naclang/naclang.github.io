@@ -64,6 +64,7 @@
 								<li><a href="#middleware">Middleware</a></li>
 								<li><a href="#templates">Templates</a></li>
 								<li><a href="#configuration">Configuration</a></li>
+								<li><a href="#deployment">Deployment</a></li>
 							</ul>
 						</li>
 						<li><a href="security.html">Cookies, sessions and security</a></li>
@@ -103,7 +104,7 @@ serve(8080)                            <span class="comment">// blocking</span><
 						<li>At most 128 routes.</li>
 					</ul>
 					<p><code>static(dir)</code> / <code>static(prefix, dir)</code> serves GET/HEAD from a directory; directory URLs serve <code>index.html</code>; the MIME type comes from the extension; <code>..</code> is rejected. Files can be up to 32 MB; up to 8 mounts.</p>
-					<p>Resolution order: routes, then static mounts, then <code>405</code> (the path matches a route for another method) or <code>404</code>.</p>
+					<p>Request flow: the built-in <code>/health</code> is answered before rate limiting (a script's own <code>GET /health</code> route takes precedence); requests rejected before script handling (400, 408, 413, 429, 431) never reach routing. Otherwise rate limiting runs, routes are matched, <code>before</code> blocks may short-circuit, the matched route runs, then static mounts, then the legacy <code>serve(port, "handler")</code> fallback, and finally <code>405</code> (the path matches a route for another method) or <code>404</code>.</p>
 				</section>
 				<section id="responses" class="doc-section">
 					<h2>Responses</h2>
@@ -114,7 +115,7 @@ serve(8080)                            <span class="comment">// blocking</span><
 json(value)       json(value, status)       <span class="comment">// application/json</span>
 redirect(url)     redirect(url, status)     <span class="comment">// 302 by default</span></code></pre>
 					</div>
-					<p>Dynamic bodies and header values are limited to 8192 characters. Handlers run one at a time, so a slow route delays the others.</p>
+					<p>Dynamic bodies and header values grow with available memory. Handlers run one at a time, so a slow route delays the others.</p>
 				</section>
 				<section id="request-helpers" class="doc-section">
 					<h2>Request helpers</h2>
@@ -179,7 +180,7 @@ redirect(url)     redirect(url, status)     <span class="comment">// 302 by defa
 				</section>
 				<section id="middleware" class="doc-section">
 					<h2>Middleware</h2>
-					<p><code>before</code> blocks run before route matching; <code>after</code> blocks run after a response is produced. Blocks run in declaration order, with up to 32 registered blocks.</p>
+					<p><code>before</code> blocks run after route matching but before the route handler; <code>after</code> blocks run after a response is produced. Blocks run in declaration order, with up to 32 registered blocks.</p>
 					<div class="terminal">
 						<div class="terminal-bar"><span>middleware.nac</span><span>NaC</span></div>
 						<pre><code><span class="keyword">before</span> <span class="string">"/admin/*"</span> {
@@ -193,7 +194,7 @@ redirect(url)     redirect(url, status)     <span class="comment">// 302 by defa
     <span class="keyword">print</span>(<span class="string">`${method} ${path} -> ${response.status}`</span>)
 }</code></pre>
 					</div>
-					<p>An unfiltered <code>before</code> block runs for every request. Use <code>before "pattern"</code> to limit it to matching paths. A before block can read the request fields (<code>method</code>, <code>path</code>, <code>query</code>, <code>headers</code>, <code>body</code>, <code>params</code>, <code>cookie</code>); returning a response short-circuits routing. An after block also receives <code>response</code> (<code>status</code>, <code>body</code>, <code>headers</code>) and may return a replacement. Middleware does not run for requests rejected before script handling (400, 408, 413, 429, 431), or the built-in <code>/health</code> endpoint.</p>
+					<p>An unfiltered <code>before</code> block runs for every request. Use <code>before "pattern"</code> to limit it to matching paths. A before block can read the request fields (<code>method</code>, <code>path</code>, <code>query</code>, <code>headers</code>, <code>body</code>, <code>params</code>, <code>cookie</code>), including the <code>params</code> already captured by route matching; returning a response short-circuits the route. An after block also receives <code>response</code> (<code>status</code>, <code>body</code>, <code>headers</code>) and may return a replacement. Middleware does not run for requests rejected before script handling (400, 408, 413, 429, 431), or the built-in <code>/health</code> endpoint.</p>
 				</section>
 				<section id="templates" class="doc-section">
 					<h2>Templates</h2>
@@ -314,7 +315,76 @@ serve()      <span class="comment">// PORT from .env or the environment, else 80
 							</tbody>
 						</table>
 					</div>
-					<p>For example, <code>./nac --host 127.0.0.1 --port 8080 --health app.nac</code> listens only on loopback and enables the health probe. See the <a href="https://github.com/naclang/nac/blob/main/docs/DEPLOYMENT.md">deployment guide</a> for proxy and deployment details.</p>
+					<p>For example, <code>./nac --host 127.0.0.1 --port 8080 --health app.nac</code> listens only on loopback and enables the health probe.</p>
+				</section>
+
+				<section id="deployment" class="doc-section">
+					<h2>Deployment</h2>
+					<p>NaC speaks plain HTTP. For HTTPS, put a reverse proxy in front of it: the proxy terminates TLS and renews certificates, while NaC listens on loopback. Flags can appear anywhere on the command line and are not passed to the script; use <code>--</code> to pass the rest through untouched.</p>
+					<div class="terminal">
+						<div class="terminal-bar"><span>terminal</span><span>bash</span></div>
+						<pre><code>./nac --host 127.0.0.1 --port 8080 --health app.nac
+./app --host 127.0.0.1 --port 8080 --health         <span class="comment"># built with nac build</span></code></pre>
+					</div>
+					<p>Priority is command line, then the environment (including <code>.env</code>), then the default. For the port and host: <code>--port</code> beats <code>serve(port)</code>, which beats <code>PORT</code>, which beats <code>8080</code>; <code>--host</code> beats <code>serve(port, host)</code>, which beats <code>NAC_HOST</code>. <code>HOST</code> is deliberately ignored because some shells export it as the machine name. Bad values stop the server at startup with a clear message.</p>
+					<p><code>--health</code> (or <code>NAC_HEALTH=1</code>) adds <code>GET</code>/<code>HEAD /health</code> returning <code>200</code> and <code>{"status":"ok"}</code>. It is exempt from rate limiting. A script’s own <code>route GET "/health"</code> takes precedence, which lets you report database status instead.</p>
+					<h3>Caddy</h3>
+					<div class="terminal">
+						<div class="terminal-bar"><span>Caddyfile</span><span>TLS at the proxy</span></div>
+						<pre><code>example.com {
+    encode gzip
+    request_body {
+        max_size 8KB
+    }
+    reverse_proxy 127.0.0.1:8080 {
+        health_uri /health
+        health_interval 10s
+    }
+}</code></pre>
+					</div>
+					<h3>nginx</h3>
+					<p>Get a certificate (for example <code>sudo certbot certonly --nginx -d example.com</code>), then:</p>
+					<div class="terminal">
+						<div class="terminal-bar"><span>nginx.conf</span><span>TLS at the proxy</span></div>
+						<pre><code>server {
+    listen 80;
+    server_name example.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name example.com;
+
+    ssl_certificate     /etc/letsencrypt/live/example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+    client_max_body_size 1m;        <span class="comment"># match --max-body-bytes</span>
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 30s;
+    }
+}</code></pre>
+					</div>
+					<p>NaC keeps HTTP/1.1 connections alive (idle ones close after a few seconds). An idle connection is watched by one <code>poll()</code> thread and only occupies a worker while a request is read and handled, so <code>--max-connections</code> can be much larger than <code>--workers</code>. In nginx, enable HTTP/1.1 and an upstream keep-alive pool:</p>
+					<div class="terminal">
+						<div class="terminal-bar"><span>nginx.conf</span><span>keep-alive</span></div>
+						<pre><code>upstream nac {
+    server 127.0.0.1:8080;
+    keepalive 32;
+}
+
+location / {
+    proxy_pass http://nac;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+}</code></pre>
+					</div>
+					<p>Behind a proxy the rate limiter still sees the proxy’s socket address, not <code>X-Forwarded-For</code>; configure the limiter with that in mind.</p>
 				</section>
 
 				<nav class="doc-pager" aria-label="Pages">

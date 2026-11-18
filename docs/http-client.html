@@ -151,7 +151,7 @@ jsonParse(text)   jsonStringify(value)</code></pre>
 								</tr>
 								<tr>
 									<td><code>data</code></td>
-									<td>The body parsed as JSON when it is JSON, otherwise <code>null</code>.</td>
+									<td>The body parsed as JSON only when it starts with <code>{</code> or <code>[</code> (objects and arrays); scalar JSON stays <code>null</code>.</td>
 								</tr>
 								<tr>
 									<td><code>error</code></td>

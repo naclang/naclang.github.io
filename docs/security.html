@@ -101,7 +101,7 @@
     <span class="keyword">return</span> json({ ok: <span class="keyword">true</span> })
 }</code></pre>
 					</div>
-					<p>Cookie defaults: <code>path: "/"</code>, <code>httpOnly: true</code>, <code>secure: false</code>, <code>sameSite: "Lax"</code>, and no <code>Max-Age</code>/<code>Expires</code>. <code>sameSite: "None"</code> automatically turns on <code>Secure</code>. <code>clearCookie</code> emits <code>Max-Age=0</code> and an <code>Expires</code> date in the past. Names must be HTTP tokens, values may not contain <code>;</code> or control characters, and both functions return <code>false</code> on invalid input. <code>expires</code> (an HTTP date string) and <code>domain</code> are also accepted.</p>
+					<p>Cookie defaults: <code>path: "/"</code>, <code>httpOnly: true</code>, <code>secure: false</code>, <code>sameSite: "Lax"</code>, and no <code>Max-Age</code>/<code>Expires</code>. <code>sameSite: "None"</code> automatically turns on <code>Secure</code>. <code>clearCookie</code> emits <code>Max-Age=0</code> and an <code>Expires</code> date in the past. Names must be HTTP tokens and values may not contain <code>;</code> or control characters. Invalid input returns <code>false</code> and reports an error: it is catchable in <code>try</code>, otherwise the script exits nonzero. <code>expires</code> (an HTTP date string) and <code>domain</code> are also accepted.</p>
 				</section>
 				<section id="security-primitives" class="doc-section">
 					<h2>Security primitives</h2>
@@ -141,7 +141,7 @@
 								</tr>
 								<tr>
 									<td><code>safeEqual(a, b)</code></td>
-									<td>Constant-time string comparison, returns a bool.</td>
+									<td>Byte-wise constant-time for equal-length strings; the loop is bounded by the shorter length. Returns a bool.</td>
 								</tr>
 								<tr>
 									<td><code>passwordHash(password)</code></td>
@@ -214,7 +214,7 @@ SESSION_TTL = 86400
 								</tr>
 								<tr>
 									<td>Request body</td>
-									<td>8191 bytes, else <code>413</code></td>
+									<td>1 MiB (configurable up to 64 MiB), else <code>413</code></td>
 								</tr>
 								<tr>
 									<td>Whole-request read deadline</td>

@@ -183,7 +183,7 @@ y = 2; z = 3 <span class="comment">// ';' is only a separator for several statem
 							</tbody>
 						</table>
 					</div>
-					<p><code>type(x)</code> returns <code>"int"</code>, <code>"float"</code>, <code>"bool"</code>, <code>"null"</code>, <code>"string"</code>, <code>"array"</code>, <code>"map"</code> or <code>"function"</code>. Strings are limited to 8192 characters, arrays to 10,000 elements.</p>
+					<p><code>type(x)</code> returns <code>"int"</code>, <code>"float"</code>, <code>"bool"</code>, <code>"null"</code>, <code>"string"</code>, <code>"array"</code>, <code>"map"</code> or <code>"function"</code>. Strings and template results grow with available memory; arrays can hold up to 50,000,000 elements.</p>
 					<h3>Template strings (interpolation)</h3>
 					<p>Backtick strings embed any expression with <code>${ }</code> (like JavaScript). Plain <code>"..."</code> strings never interpolate, so braces in JSON text are safe.</p>
 					<div class="terminal">
@@ -194,7 +194,7 @@ y = 2; z = 3 <span class="comment">// ';' is only a separator for several statem
 html(<span class="string">`&lt;h1&gt;${title}&lt;/h1&gt;
 &lt;p&gt;${count &gt; 1 and "many" or "one"}&lt;/p&gt;`</span>)   <span class="comment">// may span several lines</span></code></pre>
 					</div>
-					<p>Templates can span lines and nest. The result is limited to 8192 characters, like any string.</p>
+					<p>Templates can span lines and nest. The result grows with available memory, like any string.</p>
 				</section>
 				<section id="s4" class="doc-section">
 					<h2>Variables</h2>

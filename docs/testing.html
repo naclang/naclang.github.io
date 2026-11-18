@@ -109,10 +109,10 @@ assert(jsonParse(post.body).contentType == <span class="string">"text/plain"</sp
 					<h2>Commands</h2>
 					<div class="terminal">
 						<div class="terminal-bar"><span>terminal</span><span>bash</span></div>
-						<pre><code>./nac test examples/lang/request_test.nac    <span class="comment"># run a test script</span>
-./nac dev app.nac                            <span class="comment"># restart when the script or .env changes</span></code></pre>
+						<pre><code>TODO_SELFTEST=1 TODO_DB=:memory: ./nac test examples/apps/todo/todo.nac    <span class="comment"># in-process self test</span>
+./nac dev app.nac                                                          <span class="comment"># restart when the script or .env changes</span></code></pre>
 					</div>
-					<p><code>nac test</code> also checks configuration defaults: <code>examples/lang/config_test.nac</code> asserts that <code>env()</code> returns its default when a variable is missing.</p>
+					<p>The todo app’s self test uses <code>request()</code> and <code>assert()</code> checks. On Windows, set <code>TODO_SELFTEST=1</code> and <code>TODO_DB=:memory:</code> in the shell before running <code>nac test</code>.</p>
 				</section>
 
 				<nav class="doc-pager" aria-label="Pages">
