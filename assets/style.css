@@ -1477,6 +1477,10 @@ td code {
 	.site-nav {
 		display: grid;
 		grid-template-rows: 0fr;
+		/* The base flex rule uses align-items: center. As a grid that would keep
+		   the inner wrapper at its full content height while the row animates,
+		   so the links would pop in instead of being revealed by the row. */
+		align-items: stretch;
 		flex: 0 0 100%;
 		visibility: hidden;
 		font-size: 0.8rem;
@@ -1540,7 +1544,6 @@ td code {
 
 	.nav-dropdown {
 		width: 100%;
-		border-bottom: 1px solid var(--line);
 	}
 
 	.nav-dropbtn::after {
